@@ -8,8 +8,9 @@
     "chalk": "^4.1.0",
     "download-git-repo": "^3.0.2",
     "ejs": "^3.1.5",
-    "pacote": "^11.1.11",
-    "prompts": "^2.3.2"
+    "node-fetch": "^2.6.0",
+    "prompts": "^2.3.2",
+    "rimraf": "^3.0.2"
   },
   "bin": "./cli/index.js",
   "main": "./index.js",

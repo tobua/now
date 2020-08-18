@@ -1,0 +1,50 @@
+{
+  "name": "create-now",
+  "description": "Create projects from templates.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": "github:tobua/now",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "download-git-repo": "^3.0.2",
+    "ejs": "^3.1.5",
+    "pacote": "^11.1.11",
+    "prompts": "^2.3.2"
+  },
+  "bin": "./cli/index.js",
+  "main": "./index.js",
+  "source": "index.ts",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "engines": {
+    "node": ">= 13.2.0"
+  },
+  "scripts": {
+    "watch": "padua watch",
+    "build": "padua build",
+    "lint": "padua lint",
+    "test": "padua test",
+    "publish": "padua publish",
+    "update": "padua update"
+  },
+  "prettier": "padua/configuration/.prettierrc.json",
+  "eslintConfig": {
+    "extends": "./node_modules/padua/configuration/eslint.cjs"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "./node_modules/padua/configuration/tsconfig.json"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "padua": "0.0.1"
+  }
+}

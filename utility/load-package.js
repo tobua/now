@@ -2,9 +2,9 @@ import fetch from 'node-fetch'
 import { log } from './log.js'
 
 const getUrlFromManifest = (manifest) => {
-  let url = manifest.repository.url
+  const { url } = manifest.repository
 
-  const matches = [...url.matchAll(/.*github\.com\/([^\/\.]+\/[^\/\.]+).*$/g)]
+  const matches = [...url.matchAll(/.*github\.com\/([^/.]+\/[^/.]+).*$/g)]
 
   if (matches[0] && matches[0][1]) {
     return matches[0][1]

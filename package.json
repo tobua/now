@@ -10,7 +10,8 @@
     "ejs": "^3.1.5",
     "node-fetch": "^2.6.0",
     "prompts": "^2.3.2",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "validate-npm-package-name": "^3.0.0"
   },
   "bin": "./cli/index.js",
   "main": "./index.js",

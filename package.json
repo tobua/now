@@ -35,7 +35,13 @@
   },
   "jest": {
     "transform": {
-      "^.+\\.tsx?$": "ts-jest"
+      "^.+\\.tsx?$": "ts-jest",
+      "^.+\\.jsx?$": [
+        "babel-jest",
+        {
+          "configFile": "./node_modules/padua/configuration/.babelrc"
+        }
+      ]
     },
     "globals": {
       "ts-jest": {
@@ -47,6 +53,6 @@
     "dist"
   ],
   "devDependencies": {
-    "padua": "0.0.1"
+    "padua": "0.0.3"
   }
 }

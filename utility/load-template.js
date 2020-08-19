@@ -15,8 +15,7 @@ export const loadTemplate = async (url, template, destinationPath) => {
   await new Promise((done) => {
     download(url, gitStorePathAbsolute, (error) => {
       if (error) {
-        log(`Couldn't download repository from ${url}`)
-        process.exit(0)
+        log(`Couldn't download repository from ${url}`, 'error')
       }
 
       done()
@@ -27,7 +26,6 @@ export const loadTemplate = async (url, template, destinationPath) => {
 
   if (!existsSync(templatePath)) {
     log('Repository has no /template folder', 'error')
-    process.exit(0)
   }
 
   let singleTemplate = false
@@ -66,7 +64,6 @@ export const loadTemplate = async (url, template, destinationPath) => {
       unlinkSync(configFilePath)
     } catch(error) {
       log(`Couldn't read configuration file in ${configFilePath}`, 'error')
-      process.exit(0)
     }
   }
 

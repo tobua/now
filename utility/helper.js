@@ -27,12 +27,10 @@ export const getDestinationPath = (input) => {
 export const validatePackageName = (packageName) => {
     if (!packageName || !(typeof packageName === 'string')) {
         log('Please provide a valid package name', 'error')
-        process.exit(0)
     }
 
     if (!validate(packageName).validForOldPackages) {
         log(`${packageName} is not a valid package name`, 'error')
-        process.exit(0)
     }
 
     return packageName

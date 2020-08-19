@@ -5,10 +5,13 @@ export const log = (message, type) => {
 
   if (type === 'error') {
     console.log(`${namespace} ${chalk.red.bold('Error')} ${message}.\n`)
+    process.exit(0)
+    return
   }
 
   if (type === 'warning') {
     console.log(`${namespace} ${chalk.orange('Warning')} ${message}.\n`)
+    return
   }
 
   console.log(`${namespace} ${message}.\n`)

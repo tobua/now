@@ -11,7 +11,6 @@ const getUrlFromManifest = (manifest) => {
   }
 
   log(`Couldn't parse package repository url ${url}`, 'error')
-  process.exit(0)
 }
 
 // Loads package metadata (git repo address).
@@ -23,12 +22,10 @@ export const loadPackage = async (packageName) => {
     manifest = await response.json()
   } catch (error) {
     log(`Couldn't find package ${packageName} on npm`, 'error')
-    process.exit(0)
   }
 
   if (!manifest.repository || !manifest.repository.url) {
     log(`Package ${packageName} has no repository field`, 'error')
-    process.exit(0)
   }
 
   return getUrlFromManifest(manifest)

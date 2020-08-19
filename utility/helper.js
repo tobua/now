@@ -10,9 +10,6 @@ export const getDestinationPath = (input) => {
     destinationPath = join(process.cwd(), input)
   }
 
-  // TODO for testing
-  // destinationPath = join(process.cwd(), 'result')
-
   if (!existsSync(destinationPath)) {
     mkdirSync(destinationPath, { recursive: true })
   } else if (!lstatSync(destinationPath).isDirectory()) {

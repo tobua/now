@@ -1,5 +1,5 @@
-export function template(
+export async function create(
   packageName: string,
-  template?: string,
-  destinationPath?: string
+  destinationPath?: string,
+  template?: string
 ): boolean

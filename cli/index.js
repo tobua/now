@@ -6,8 +6,8 @@ import { loadTemplate } from '../utility/load-template.js'
 import { log } from '../utility/log.js'
 
 let packageName = validatePackageName(process.argv.slice(2)[0])
-let template = process.argv.slice(2)[1] || 'default'
-let destinationPath = getDestinationPath(process.argv.slice(2)[2])
+let destinationPath = getDestinationPath(process.argv.slice(2)[1])
+let template = process.argv.slice(2)[2] || 'default'
 
 ;(async () => {
   const url = await loadPackage(packageName)

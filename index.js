@@ -3,12 +3,16 @@ import { loadPackage } from '../utility/load-package.js'
 import { loadTemplate } from '../utility/load-template.js'
 import { log } from '../utility/log.js'
 
-export const template = async (packageName, template = 'default', destinationPath) => {
+export const create = async (
+  packageName,
+  destinationPath,
+  template = 'default'
+) => {
   validatePackageName(packageName)
-  destinationPath = getDestinationPath(process.argv.slice(2)[2])
+  const destination = getDestinationPath(destinationPath)
 
   const url = await loadPackage(packageName)
-  await loadTemplate(url, template, destinationPath)
+  await loadTemplate(url, template, destination)
 
-  log(`Done, project created in ${destinationPath}`)
+  log(`Done, project created in ${destination}`)
 }

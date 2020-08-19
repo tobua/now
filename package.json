@@ -15,8 +15,8 @@
   },
   "bin": "./cli/index.js",
   "main": "./index.js",
-  "source": "index.ts",
-  "types": "dist/index.d.ts",
+  "source": "./index.js",
+  "types": "./index.d.ts",
   "type": "module",
   "engines": {
     "node": ">= 13.2.0"
@@ -50,7 +50,10 @@
     }
   },
   "files": [
-    "dist"
+    "cli",
+    "utility",
+    "index.js",
+    "index.d.ts"
   ],
   "devDependencies": {
     "padua": "0.0.3"

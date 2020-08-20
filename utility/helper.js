@@ -1,7 +1,9 @@
 import { mkdirSync, lstatSync, existsSync } from 'fs'
 import { join } from 'path'
+import rimraf from 'rimraf'
 import validate from 'validate-npm-package-name'
 import { log } from './log.js'
+import { gitStorePath } from '../config.js'
 
 export const getDestinationPath = (input) => {
   let destinationPath = process.cwd()
@@ -29,4 +31,8 @@ export const validatePackageName = (packageName) => {
   }
 
   return packageName
+}
+
+export const cleanup = () => {
+  rimraf.sync(gitStorePath)
 }

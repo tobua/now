@@ -1,17 +1,31 @@
 #!/usr/bin/env node
 
-import { getDestinationPath, validatePackageName } from '../utility/helper.js'
+import {
+  getDestinationPath,
+  validatePackageName,
+  cleanup,
+} from '../utility/helper.js'
 import { loadPackage } from '../utility/load-package.js'
-import { loadTemplate } from '../utility/load-template.js'
+import { downloadTemplate } from '../utility/download-template.js'
+import { getTemplateDirectory } from '../utility/template-directory.js'
+import { collectVariables } from '../utility/collect-variables.js'
+import { writeFiles } from '../utility/write-files.js'
 import { log } from '../utility/log.js'
 
-let packageName = validatePackageName(process.argv.slice(2)[0])
-let destinationPath = getDestinationPath(process.argv.slice(2)[1])
-let template = process.argv.slice(2)[2] || 'default'
+const packageName = validatePackageName(process.argv.slice(2)[0])
+const destination = getDestinationPath(process.argv.slice(2)[1])
+const template = process.argv.slice(2)[2] || 'default'
 
 ;(async () => {
-  const url = await loadPackage(packageName)
-  await loadTemplate(url, template, destinationPath)
+  cleanup()
 
-  log(`Done, project created in ${destinationPath}`)
+  const url = await loadPackage(packageName)
+  await downloadTemplate(url)
+  const templateDirectory = await getTemplateDirectory(template)
+  const variables = await collectVariables(templateDirectory)
+  await writeFiles(destination, variables, templateDirectory)
+
+  cleanup()
+
+  log(`Done, project created in ${destination}`)
 })()

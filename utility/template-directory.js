@@ -4,10 +4,11 @@ import { log } from './log.js'
 import { promptDirectories } from './prompt.js'
 import { gitStorePathAbsolute } from '../config.js'
 
-export const getTemplateDirectory = async (template) => {
-  const templatePath = join(gitStorePathAbsolute, 'template')
-
-  if (!existsSync(templatePath)) {
+export const getTemplateDirectory = async (
+  template,
+  templatesPath = join(gitStorePathAbsolute, 'template')
+) => {
+  if (!existsSync(templatesPath)) {
     log('Repository has no /template folder', 'error')
   }
 
@@ -15,7 +16,7 @@ export const getTemplateDirectory = async (template) => {
 
   // TODO fail programmatic if several templates available, but none selected.
 
-  const directories = readdirSync(templatePath, { withFileTypes: true })
+  const directories = readdirSync(templatesPath, { withFileTypes: true })
     .filter((path) => {
       if (!path.isDirectory()) {
         singleTemplate = true
@@ -36,5 +37,5 @@ export const getTemplateDirectory = async (template) => {
     ;[directory] = directories
   }
 
-  return join(templatePath, directory)
+  return join(templatesPath, directory)
 }

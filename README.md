@@ -10,13 +10,13 @@ Create projects from templates.
 
 Install template for compatible packages like this:
 
-```shell
+```sh
 npm init now padua
 ```
 
 ## Options
 
-```shell
+```bash
 npm init now npm-package-name [destination] [template]
 ```
 
@@ -26,7 +26,7 @@ The second argument can be used to describe the location where to place the proj
 
 Use typescript template and place result in /my-plugin folder.
 
-```shell
+```console
 npm init now padua my-plugin typescript
 ```
 
@@ -47,7 +47,7 @@ repository-root
 │   package.json
 └───template
     │   package.json
-    │   index.js
+    └   index.js
 ```
 
 If you want to provide several templates create a folder for each one inside `/template` and `now` will prompt the user which one to use. For this to work it's important that there are no other files located in the template root. If there is a `default` named template available and the user has not selected a template to be used on invocation this one will be used without prompting.
@@ -56,11 +56,11 @@ If you want to provide several templates create a folder for each one inside `/t
 repository-root
 │   ...
 └───template
-    └───javascript
+    ├───javascript
     │   │   package.json
     │   └   index.js
     │
-    └───typescript
+    ├───typescript
     │   │   package.json
     │   │   index.ts
     │   └   tsconfig.json

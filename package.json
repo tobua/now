@@ -1,9 +1,48 @@
 {
   "name": "create-now",
-  "description": "Create projects from templates.",
   "version": "0.1.0",
-  "license": "MIT",
+  "description": "Create projects from templates.",
   "repository": "github:tobua/now",
+  "license": "MIT",
+  "type": "module",
+  "main": "./index.js",
+  "source": "./index.js",
+  "types": "./index.d.ts",
+  "bin": "./cli/index.js",
+  "files": [
+    "cli",
+    "utility",
+    "index.js",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "build": "padua build",
+    "lint": "padua lint",
+    "publish": "padua publish",
+    "test": "padua test",
+    "update": "padua update",
+    "watch": "padua watch"
+  },
+  "prettier": "padua/configuration/.prettierrc.json",
+  "eslintConfig": {
+    "extends": "./node_modules/padua/configuration/eslint.cjs"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "./node_modules/padua/configuration/tsconfig.json"
+      }
+    },
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest",
+      "^.+\\.jsx?$": [
+        "babel-jest",
+        {
+          "configFile": "./node_modules/padua/configuration/.babelrc"
+        }
+      ]
+    }
+  },
   "dependencies": {
     "chalk": "^4.1.0",
     "download-git-repo": "^3.0.2",
@@ -13,50 +52,11 @@
     "rimraf": "^3.0.2",
     "validate-npm-package-name": "^3.0.0"
   },
-  "bin": "./cli/index.js",
-  "main": "./index.js",
-  "source": "./index.js",
-  "types": "./index.d.ts",
-  "type": "module",
-  "engines": {
-    "node": ">= 13.2.0"
-  },
-  "scripts": {
-    "watch": "padua watch",
-    "build": "padua build",
-    "lint": "padua lint",
-    "test": "padua test",
-    "publish": "padua publish",
-    "update": "padua update"
-  },
-  "prettier": "padua/configuration/.prettierrc.json",
-  "eslintConfig": {
-    "extends": "./node_modules/padua/configuration/eslint.cjs"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest",
-      "^.+\\.jsx?$": [
-        "babel-jest",
-        {
-          "configFile": "./node_modules/padua/configuration/.babelrc"
-        }
-      ]
-    },
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "./node_modules/padua/configuration/tsconfig.json"
-      }
-    }
-  },
-  "files": [
-    "cli",
-    "utility",
-    "index.js",
-    "index.d.ts"
-  ],
   "devDependencies": {
     "mock-stdin": "^1.0.0",
-    "padua": "0.0.3"
+    "padua": "0.0.4"
+  },
+  "engines": {
+    "node": ">= 13.2.0"
   }
 }

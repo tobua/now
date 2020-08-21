@@ -4,6 +4,41 @@ import { log } from './log.js'
 import { promptDirectories } from './prompt.js'
 import { gitStorePathAbsolute } from '../config.js'
 
+// singleTemplate: is there only one template available.
+// directories: all the available templates.
+// template: optional template the user has already selected.
+const selectDirectory = async (singleTemplate, directories, template) => {
+  if (singleTemplate) {
+    return '.'
+  }
+
+  if (!directories.length) {
+    log('No applicable templates found', 'error')
+  }
+
+  if (directories.length === 1) {
+    if (!template || directories[0] === template) {
+      return directories[0]
+    }
+    log(`The template "${template}" wasn't found in the package`, 'error')
+  }
+
+  if (template && directories.includes(template)) {
+    return template
+  }
+
+  if (template && !directories.includes(template)) {
+    log(`The template "${template}" wasn't found in the package`, 'error')
+  }
+
+  // If user has not selected a template but there is a default template, then use this one.
+  if (directories.includes('default')) {
+    return 'default'
+  }
+
+  return promptDirectories(directories)
+}
+
 export const getTemplateDirectory = async (
   template,
   templatesPath = join(gitStorePathAbsolute, 'template')
@@ -13,8 +48,6 @@ export const getTemplateDirectory = async (
   }
 
   let singleTemplate = false
-
-  // TODO fail programmatic if several templates available, but none selected.
 
   const directories = readdirSync(templatesPath, { withFileTypes: true })
     .filter((path) => {
@@ -27,15 +60,7 @@ export const getTemplateDirectory = async (
     })
     .map((path) => path.name)
 
-  let directory
-
-  if (!singleTemplate && directories.length > 1) {
-    directory = await promptDirectories(directories)
-  } else if (singleTemplate) {
-    directory = '.'
-  } else {
-    ;[directory] = directories
-  }
+  const directory = await selectDirectory(singleTemplate, directories, template)
 
   return join(templatesPath, directory)
 }

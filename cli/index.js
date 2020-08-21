@@ -14,7 +14,7 @@ import { log } from '../utility/log.js'
 
 const packageName = validatePackageName(process.argv.slice(2)[0])
 const destination = getDestinationPath(process.argv.slice(2)[1])
-const template = process.argv.slice(2)[2] || 'default'
+const template = process.argv.slice(2)[2]
 
 ;(async () => {
   cleanup()

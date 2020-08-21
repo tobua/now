@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, unlinkSync } from 'fs'
+import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { promptVariables } from './prompt.js'
 import { log } from './log.js'
@@ -11,7 +11,6 @@ export const collectVariables = async (templateDirectory) => {
   if (existsSync(configFilePath)) {
     try {
       config = JSON.parse(readFileSync(configFilePath, 'utf8'))
-      unlinkSync(configFilePath)
     } catch (error) {
       log(`Couldn't read configuration file in ${configFilePath}`, 'error')
     }

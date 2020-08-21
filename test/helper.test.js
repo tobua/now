@@ -27,19 +27,20 @@ test('Returns correct destination paths.', () => {
   // Use current folder.
   expect(getDestinationPath('.')).toEqual(cwd)
   // Use and create directory.
-  expect(existsSync(join(cwd, 'somewhere')).toBeFalsy)
+  expect(existsSync(join(cwd, 'somewhere'))).toBeFalsy()
   expect(getDestinationPath('somewhere')).toEqual(join(cwd, 'somewhere'))
-  expect(existsSync(join(cwd, 'somewhere')).toBeTruthy)
+  expect(existsSync(join(cwd, 'somewhere'))).toBeTruthy()
   // Use and create nested directories.
-  expect(existsSync(join(cwd, 'some/where')).toBeFalsy)
+  expect(existsSync(join(cwd, 'some/where'))).toBeFalsy()
   expect(getDestinationPath('some/where')).toEqual(join(cwd, 'some/where'))
-  expect(existsSync(join(cwd, 'some/where')).toBeTruthy)
+  expect(existsSync(join(cwd, 'some/where'))).toBeTruthy()
 
   // Clean up created directories.
   rimraf.sync(join(cwd, 'somewhere'))
-  rimraf.sync(join(cwd, 'some/where'))
+  rimraf.sync(join(cwd, 'some'))
+
   // Directories have been removed.
-  expect(existsSync(join(cwd, 'somewhere')).toBeFalsy)
-  expect(existsSync(join(cwd, 'some/where')).toBeFalsy)
-  expect(existsSync(join(cwd, 'some')).toBeFalsy)
+  expect(existsSync(join(cwd, 'somewhere'))).toBeFalsy()
+  expect(existsSync(join(cwd, 'some/where'))).toBeFalsy()
+  expect(existsSync(join(cwd, 'some'))).toBeFalsy()
 })

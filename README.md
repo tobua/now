@@ -10,13 +10,13 @@ Create projects from templates.
 
 Install template for compatible packages like this:
 
-```sh
+```console
 npm init now padua
 ```
 
 ## Options
 
-```bash
+```console
 npm init now npm-package-name [destination] [template]
 ```
 
@@ -70,6 +70,32 @@ repository-root
 ```
 
 It's not necessary that the templates are published to npm as they will be downloaded from the git repository linked in the `package.json` of the respective plugin.
+
+### Variables
+
+Template files can be enhanced with static or user-defined variables. Use the [EJS](https://ejs.co/) to place them in any of your files. Here is an example of a dynamic `package.json`:
+
+```json
+{
+  "name": "<%= name %>",
+  "description": "<%= description %>"
+}
+```
+
+The variable contents need to be defined in a `template.json` file at the top of your template. Variables are static and need to be defined in advance, while prompts are dynamic and will be prompted to the user when the template is generated. The syntax for [prompts](https://github.com/terkelg/prompts) matches the npm package with the same name.
+
+```json
+{
+  "variables": {
+    "name": "my-plugin"
+  },
+  "prompts": [
+    {
+      "name": "description"
+    }
+  ]
+}
+```
 
 ## node Usage
 

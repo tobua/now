@@ -10,11 +10,7 @@ import { collectVariables } from '../utility/collect-variables.js'
 import { writeFiles } from '../utility/write-files.js'
 import { log } from '../utility/log.js'
 
-export const create = async (
-  packageName,
-  destinationPath,
-  template = 'default'
-) => {
+export const create = async (packageName, destinationPath, template) => {
   validatePackageName(packageName)
   const destination = getDestinationPath(destinationPath)
 

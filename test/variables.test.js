@@ -3,6 +3,7 @@ const { join } = require('path')
 const { stdin } = require('mock-stdin')
 const rimraf = require('rimraf')
 const { getTemplateDirectory } = require('../utility/template-directory.js')
+const { getConfig } = require('../utility/get-config.js')
 const { collectVariables } = require('../utility/collect-variables.js')
 const { writeFiles } = require('../utility/write-files.js')
 
@@ -26,7 +27,8 @@ test('No variables collected without template.json file.', async () => {
     undefined,
     join(process.cwd(), 'test/fixture/basic')
   )
-  const variables = await collectVariables(templateDirectory)
+  const config = getConfig(templateDirectory)
+  const variables = await collectVariables(config)
   await writeFiles(destination, variables, templateDirectory)
 
   expect(existsSync(join(destination, 'package.json'))).toBeTruthy()
@@ -44,7 +46,8 @@ test('Static variables from template.json are written.', async () => {
     'static',
     join(process.cwd(), 'test/fixture/variable')
   )
-  const variables = await collectVariables(templateDirectory)
+  const config = getConfig(templateDirectory)
+  const variables = await collectVariables(config)
   await writeFiles(destination, variables, templateDirectory)
 
   expect(existsSync(join(destination, 'package.json'))).toBeTruthy()
@@ -78,7 +81,8 @@ test('Dynamic variables from template.json are prompted and written.', async () 
     'dynamic',
     join(process.cwd(), 'test/fixture/variable')
   )
-  const variables = await collectVariables(templateDirectory)
+  const config = getConfig(templateDirectory)
+  const variables = await collectVariables(config)
   await writeFiles(destination, variables, templateDirectory)
 
   expect(existsSync(join(destination, 'index.ts'))).toBeTruthy()
@@ -110,7 +114,8 @@ test('Nested files are written as well and static, dynamic variables can be comb
     'nested',
     join(process.cwd(), 'test/fixture/variable')
   )
-  const variables = await collectVariables(templateDirectory)
+  const config = getConfig(templateDirectory)
+  const variables = await collectVariables(config)
   await writeFiles(destination, variables, templateDirectory)
 
   expect(existsSync(join(destination, 'package.json'))).toBeTruthy()
@@ -118,7 +123,10 @@ test('Nested files are written as well and static, dynamic variables can be comb
   expect(existsSync(join(destination, 'template.json'))).toBeFalsy()
 
   const contentsRoot = readFileSync(join(destination, 'package.json'), 'utf8')
-  const contentsNested = readFileSync(join(destination, 'deep/package.json'), 'utf8')
+  const contentsNested = readFileSync(
+    join(destination, 'deep/package.json'),
+    'utf8'
+  )
 
   const expectedContents = `{\n    "name": "first",\n    "description": "second",\n    "version": "1.0.0"\n}`
 

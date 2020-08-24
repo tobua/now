@@ -1,20 +1,7 @@
-import { existsSync, readFileSync } from 'fs'
-import { join } from 'path'
 import { promptVariables } from './prompt.js'
-import { log } from './log.js'
 
-export const collectVariables = async (templateDirectory) => {
-  const configFilePath = join(templateDirectory, 'template.json')
-  let config = {}
+export const collectVariables = async (config) => {
   const variables = {}
-
-  if (existsSync(configFilePath)) {
-    try {
-      config = JSON.parse(readFileSync(configFilePath, 'utf8'))
-    } catch (error) {
-      log(`Couldn't read configuration file in ${configFilePath}`, 'error')
-    }
-  }
 
   if (config.variables) {
     Object.assign(variables, config.variables)

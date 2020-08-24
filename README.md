@@ -97,6 +97,20 @@ The variable contents need to be defined in a `template.json` file at the top of
 }
 ```
 
+### Options
+
+In the optional `template.json` file you can add further options to configure the process.
+
+```json
+{
+  "variables": {...},
+  "prompts": [...],
+  "noInstall": true
+}
+```
+
+`noInstall` [false] prevents npm install even if dependencies or devDependencies found in package.json
+
 ## node Usage
 
 ```js

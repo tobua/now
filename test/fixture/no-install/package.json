@@ -1,0 +1,6 @@
+{
+  "name": "test",
+  "devDependencies": {
+    "padua": "^0.0.4"
+  }
+}

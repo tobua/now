@@ -8,6 +8,8 @@ import { downloadTemplate } from '../utility/download-template.js'
 import { getTemplateDirectory } from '../utility/template-directory.js'
 import { collectVariables } from '../utility/collect-variables.js'
 import { writeFiles } from '../utility/write-files.js'
+import { installDependencies } from '../utility/install-dependencies.js'
+import { getConfig } from '../utility/get-config.js'
 import { log } from '../utility/log.js'
 
 export const create = async (packageName, destinationPath, template) => {
@@ -19,8 +21,10 @@ export const create = async (packageName, destinationPath, template) => {
   const url = await loadPackage(packageName)
   await downloadTemplate(url)
   const templateDirectory = await getTemplateDirectory(template)
-  const variables = await collectVariables(templateDirectory)
+  const config = getConfig(templateDirectory)
+  const variables = await collectVariables(config)
   await writeFiles(destination, variables, templateDirectory)
+  installDependencies(config, destination)
 
   cleanup()
 

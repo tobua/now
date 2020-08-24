@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/tobua/now/compare/v0.1.0...v0.1.1) (2020-08-24)
+
+
+### Features
+
+* **install:** install dependencies if there are any ([394f129](https://github.com/tobua/now/commit/394f129ef6e0c9e7a8ecd049985e002d4df1a8a5))
+
 ## 0.1.0 (2020-08-21)
 
 

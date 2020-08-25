@@ -1,7 +1,7 @@
 import { readdirSync, writeFileSync, existsSync, mkdirSync } from 'fs'
 import { join } from 'path'
 import ejs from 'ejs'
-import { log } from './log.js'
+import log from 'logua'
 
 const writeDirectoryFiles = (
   directory,

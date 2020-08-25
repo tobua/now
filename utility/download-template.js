@@ -1,5 +1,5 @@
+import log from 'logua'
 import download from 'download-git-repo'
-import { log } from './log.js'
 import { gitStorePathAbsolute } from '../config.js'
 
 export const downloadTemplate = async (url) => {

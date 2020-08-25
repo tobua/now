@@ -1,6 +1,6 @@
 import { existsSync, readdirSync } from 'fs'
 import { join } from 'path'
-import { log } from './log.js'
+import log from 'logua'
 import { promptDirectories } from './prompt.js'
 import { gitStorePathAbsolute } from '../config.js'
 

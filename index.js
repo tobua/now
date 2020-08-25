@@ -1,3 +1,4 @@
+import log from 'logua'
 import {
   getDestinationPath,
   validatePackageName,
@@ -10,7 +11,6 @@ import { collectVariables } from '../utility/collect-variables.js'
 import { writeFiles } from '../utility/write-files.js'
 import { installDependencies } from '../utility/install-dependencies.js'
 import { getConfig } from '../utility/get-config.js'
-import { log } from '../utility/log.js'
 
 export const create = async (packageName, destinationPath, template) => {
   validatePackageName(packageName)

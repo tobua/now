@@ -1,8 +1,8 @@
 import { mkdirSync, lstatSync, existsSync } from 'fs'
 import { join } from 'path'
+import log from 'logua'
 import rimraf from 'rimraf'
 import validate from 'validate-npm-package-name'
-import { log } from './log.js'
 import { gitStorePath } from '../config.js'
 
 export const getDestinationPath = (input) => {

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import log from 'logua'
 import {
   getDestinationPath,
   validatePackageName,
@@ -10,7 +11,6 @@ import { downloadTemplate } from '../utility/download-template.js'
 import { getTemplateDirectory } from '../utility/template-directory.js'
 import { collectVariables } from '../utility/collect-variables.js'
 import { writeFiles } from '../utility/write-files.js'
-import { log } from '../utility/log.js'
 import { installDependencies } from '../utility/install-dependencies.js'
 import { getConfig } from '../utility/get-config.js'
 

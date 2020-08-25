@@ -1,6 +1,6 @@
 {
   "name": "create-now",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Create projects from templates.",
   "repository": "github:tobua/now",
   "license": "MIT",
@@ -18,7 +18,7 @@
   "scripts": {
     "build": "padua build",
     "lint": "padua lint",
-    "publish": "padua publish",
+    "prepublish": "padua publish",
     "test": "padua test",
     "update": "padua update",
     "watch": "padua watch"

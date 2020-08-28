@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/tobua/now/compare/v0.1.2...v0.1.3) (2020-08-28)
+
+
+### Bug Fixes
+
+* **npm:** file missing from publish ([42cf044](https://github.com/tobua/now/commit/42cf04484360c8354c957433e10df6fedca31225))
+
 ### [0.1.2](https://github.com/tobua/now/compare/v0.1.1...v0.1.2) (2020-08-25)
 
 ### [0.1.1](https://github.com/tobua/now/compare/v0.1.0...v0.1.1) (2020-08-24)

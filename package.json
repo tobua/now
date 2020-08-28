@@ -1,6 +1,6 @@
 {
   "name": "create-now",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Create projects from templates.",
   "repository": "github:tobua/now",
   "license": "MIT",

@@ -5,18 +5,20 @@
   "repository": "github:tobua/now",
   "license": "MIT",
   "type": "module",
-  "main": "dist/index.js",
-  "source": "index.ts",
-  "types": "dist/index.d.ts",
+  "main": "./index.js",
+  "source": "./index.js",
+  "types": "./index.d.ts",
   "bin": "./cli/index.js",
   "files": [
-    "dist"
+    "cli",
+    "utility",
+    "*.js",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "padua build",
     "lint": "padua lint",
-    "prepublish": "padua publish",
-    "publish": "padua publish",
+    "release": "padua publish",
     "test": "padua test",
     "update": "padua update",
     "watch": "padua watch"

@@ -1,8 +1,8 @@
 import { existsSync, readdirSync } from 'fs'
 import { join } from 'path'
-import log from 'logua'
 import { promptDirectories } from './prompt.js'
 import { gitStorePathAbsolute } from '../config.js'
+import { log } from './log.js'
 
 // singleTemplate: is there only one template available.
 // directories: all the available templates.

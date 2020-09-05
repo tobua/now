@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
-import log from 'logua'
 import { execSync } from 'child_process'
+import { log } from './log.js'
 
 export const installDependencies = (config, destination) => {
   if (config.noInstall) {

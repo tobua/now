@@ -1,5 +1,5 @@
-import log from 'logua'
 import fetch from 'node-fetch'
+import { log } from './log.js'
 
 const getUrlFromManifest = (manifest) => {
   const { url } = manifest.repository

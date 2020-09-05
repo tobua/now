@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import log, { configure } from 'logua'
 import {
   getDestinationPath,
   validatePackageName,
@@ -13,8 +12,7 @@ import { collectVariables } from '../utility/collect-variables.js'
 import { writeFiles } from '../utility/write-files.js'
 import { installDependencies } from '../utility/install-dependencies.js'
 import { getConfig } from '../utility/get-config.js'
-
-configure({ init: true })
+import { log } from '../utility/log.js'
 
 const packageName = validatePackageName(process.argv.slice(2)[0])
 const destination = getDestinationPath(process.argv.slice(2)[1])

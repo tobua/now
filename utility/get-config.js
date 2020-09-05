@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
-import log from 'logua'
+import { log } from './log.js'
 
 export const getConfig = (templateDirectory) => {
   const configFilePath = join(templateDirectory, 'template.json')

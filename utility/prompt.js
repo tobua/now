@@ -1,5 +1,5 @@
-import log from 'logua'
 import prompts from 'prompts'
+import { log } from './log.js'
 
 export const promptDirectories = async (directories) => {
   const response = await prompts({

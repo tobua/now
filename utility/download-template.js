@@ -1,6 +1,6 @@
-import log from 'logua'
 import download from 'download-git-repo'
 import { gitStorePathAbsolute } from '../config.js'
+import { log } from './log.js'
 
 export const downloadTemplate = async (url) => {
   await new Promise((done) => {

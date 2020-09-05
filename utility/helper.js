@@ -1,9 +1,9 @@
 import { mkdirSync, lstatSync, existsSync } from 'fs'
 import { join } from 'path'
-import log from 'logua'
 import rimraf from 'rimraf'
 import validate from 'validate-npm-package-name'
 import { gitStorePath } from '../config.js'
+import { log } from './log.js'
 
 export const getDestinationPath = (input) => {
   let destinationPath = process.cwd()

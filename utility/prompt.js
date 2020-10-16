@@ -20,6 +20,7 @@ export const promptVariables = async (inputPrompts) => {
 
   inputPrompts.forEach((prompt) => {
     if (!prompt.type) {
+      // eslint-disable-next-line no-param-reassign
       prompt.type = 'text'
     }
 
@@ -29,6 +30,7 @@ export const promptVariables = async (inputPrompts) => {
     }
 
     if (!prompt.message) {
+      // eslint-disable-next-line no-param-reassign
       prompt.message = `Value for "${prompt.name}"?`
     }
   })
@@ -38,6 +40,9 @@ export const promptVariables = async (inputPrompts) => {
   }
 
   const response = await prompts(inputPrompts)
+
+  // eslint-disable-next-line no-console
+  console.log('')
 
   return response
 }

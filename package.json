@@ -1,31 +1,48 @@
 {
   "name": "create-now",
-  "version": "0.1.6",
   "description": "Create projects from templates.",
+  "version": "0.1.6",
   "repository": "github:tobua/now",
   "license": "MIT",
+  "scripts": {
+    "test": "padua test"
+  },
+  "padua": {
+    "source": true
+  },
+  "dependencies": {
+    "download-git-repo": "^3.0.2",
+    "ejs": "^3.1.5",
+    "logua": "^2.1.1",
+    "node-fetch": "^2.6.1",
+    "prompts": "^2.3.2",
+    "rimraf": "^3.0.2",
+    "validate-npm-package-name": "^3.0.0"
+  },
   "type": "module",
-  "main": "./index.js",
-  "source": "./index.js",
-  "types": "./index.d.ts",
-  "bin": "./cli/index.js",
+  "main": "index.js",
+  "bin": "cli/index.js",
+  "source": "index.js",
+  "types": "index.d.ts",
   "files": [
     "cli",
     "utility",
     "*.js",
     "index.d.ts"
   ],
-  "scripts": {
-    "build": "padua build",
-    "lint": "padua lint",
-    "release": "padua release",
-    "test": "padua test",
-    "update": "padua update",
-    "watch": "padua watch"
+  "devDependencies": {
+    "mock-stdin": "^1.0.0",
+    "padua": "0.1.2"
   },
   "prettier": "padua/configuration/.prettierrc.json",
   "eslintConfig": {
-    "extends": "./node_modules/padua/configuration/eslint.cjs"
+    "extends": "./node_modules/padua/configuration/eslint.cjs",
+    "rules": {
+      "import/extensions": [
+        2,
+        "always"
+      ]
+    }
   },
   "jest": {
     "globals": {
@@ -42,19 +59,6 @@
         }
       ]
     }
-  },
-  "dependencies": {
-    "download-git-repo": "^3.0.2",
-    "ejs": "^3.1.5",
-    "logua": "^2.0.0",
-    "node-fetch": "^2.6.1",
-    "prompts": "^2.3.2",
-    "rimraf": "^3.0.2",
-    "validate-npm-package-name": "^3.0.0"
-  },
-  "devDependencies": {
-    "mock-stdin": "^1.0.0",
-    "padua": "0.0.8"
   },
   "engines": {
     "node": ">= 13.2.0"

@@ -10,7 +10,7 @@ const getUrlFromManifest = (manifest) => {
     return matches[0][1]
   }
 
-  log(`Couldn't parse package repository url ${url}`, 'error')
+  return log(`Couldn't parse package repository url ${url}`, 'error')
 }
 
 // Loads package metadata (git repo address).

@@ -2,6 +2,8 @@ const { existsSync, readFileSync } = require('fs')
 const { join } = require('path')
 const { stdin } = require('mock-stdin')
 const rimraf = require('rimraf')
+const readChunk = require('read-chunk')
+const isPng = require('is-png')
 const { getTemplateDirectory } = require('../utility/template-directory.js')
 const { getConfig } = require('../utility/get-config.js')
 const { collectVariables } = require('../utility/collect-variables.js')
@@ -162,6 +164,31 @@ test('Specific files can be excluded from transform.', async () => {
 
   expect(contents).toEqual(`console.log('name description')\n`)
   expect(contentsExcluded).toEqual(`console.log('<%= keep.this %> name')\n`)
+
+  rimraf.sync(destination)
+})
+
+test('Non text files will stay intact when copied.', async () => {
+  const templateDirectory = await getTemplateDirectory(
+    'image',
+    join(process.cwd(), 'test/fixture/variable')
+  )
+  await writeFiles(destination, {}, templateDirectory, {})
+
+  expect(existsSync(join(destination, 'index.ts'))).toBeTruthy()
+  expect(existsSync(join(destination, 'logo.png'))).toBeTruthy()
+  expect(existsSync(join(destination, 'logo-invalid.png'))).toBeTruthy()
+  expect(existsSync(join(destination, 'nested/logo.png'))).toBeTruthy()
+  expect(existsSync(join(destination, 'nested/logo-invalid.png'))).toBeTruthy()
+  expect(existsSync(join(destination, 'index.js'))).toBeFalsy()
+
+  const isValidImage = (fileName) =>
+    isPng(readChunk.sync(join(destination, fileName), 0, 8))
+
+  expect(isValidImage('logo.png')).toBeTruthy()
+  expect(isValidImage('logo-invalid.png')).toBeFalsy()
+  expect(isValidImage('nested/logo.png')).toBeTruthy()
+  expect(isValidImage('nested/logo-invalid.png')).toBeFalsy()
 
   rimraf.sync(destination)
 })

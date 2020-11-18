@@ -7,16 +7,20 @@ const writeDirectoryFiles = (
   directory,
   variables,
   destinationPath,
-  relativePath = '.'
+  relativePath = '.',
+  config = {}
 ) => {
   readdirSync(directory, { withFileTypes: true }).forEach((path) => {
+    const ejsOptions = {}
+
     if (path.isDirectory()) {
       // Recursively check subfolders.
       writeDirectoryFiles(
         join(directory, path.name),
         variables,
         destinationPath,
-        join(relativePath, path.name)
+        join(relativePath, path.name),
+        config
       )
       return
     }
@@ -26,10 +30,14 @@ const writeDirectoryFiles = (
       return
     }
 
+    if ((config.excludeTransform || []).includes(path.name)) {
+      ejsOptions.delimiter = '#'
+    }
+
     ejs.renderFile(
       join(directory, path.name),
       variables,
-      {},
+      ejsOptions,
       (error, result) => {
         if (error) {
           log(`Error rendering template for ${path.name}`, 'error')
@@ -47,11 +55,22 @@ const writeDirectoryFiles = (
   })
 }
 
-export const writeFiles = (destinationPath, variables, templateDirectory) => {
+export const writeFiles = (
+  destinationPath,
+  variables,
+  templateDirectory,
+  config
+) => {
   // Ensure destination directory exists.
   if (!existsSync(destinationPath)) {
     mkdirSync(destinationPath)
   }
 
-  writeDirectoryFiles(templateDirectory, variables, destinationPath)
+  writeDirectoryFiles(
+    templateDirectory,
+    variables,
+    destinationPath,
+    '.',
+    config
+  )
 }

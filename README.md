@@ -105,11 +105,14 @@ In the optional `template.json` file you can add further options to configure th
 {
   "variables": {...},
   "prompts": [...],
-  "noInstall": true
+  "noInstall": true,
+  "excludeTransform": ["index.html"]
 }
 ```
 
 `noInstall` [false] prevents npm install even if dependencies or devDependencies found in package.json
+
+`excludeTransform` [none] template variables like `<% whatever %>` will be ignored, only one's with `<# here #>` will be replaced.
 
 ## node Usage
 

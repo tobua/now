@@ -23,7 +23,7 @@ export const create = async (packageName, destinationPath, template) => {
   const templateDirectory = await getTemplateDirectory(template)
   const config = getConfig(templateDirectory)
   const variables = await collectVariables(config)
-  await writeFiles(destination, variables, templateDirectory)
+  await writeFiles(destination, variables, templateDirectory, config)
   installDependencies(config, destination)
 
   cleanup()

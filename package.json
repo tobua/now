@@ -13,9 +13,9 @@
   "dependencies": {
     "download-git-repo": "^3.0.2",
     "ejs": "^3.1.5",
-    "logua": "^2.1.1",
+    "logua": "^2.1.2",
     "node-fetch": "^2.6.1",
-    "prompts": "^2.3.2",
+    "prompts": "^2.4.0",
     "rimraf": "^3.0.2",
     "validate-npm-package-name": "^3.0.0"
   },
@@ -32,7 +32,7 @@
   ],
   "devDependencies": {
     "mock-stdin": "^1.0.0",
-    "padua": "0.1.2"
+    "padua": "0.1.4"
   },
   "prettier": "padua/configuration/.prettierrc.json",
   "eslintConfig": {
@@ -50,15 +50,21 @@
         "tsConfig": "./node_modules/padua/configuration/tsconfig.json"
       }
     },
+    "modulePathIgnorePatterns": [
+      "test/fixture"
+    ],
     "transform": {
-      "^.+\\.tsx?$": "ts-jest",
       "^.+\\.jsx?$": [
         "babel-jest",
         {
           "configFile": "./node_modules/padua/configuration/.babelrc"
         }
-      ]
-    }
+      ],
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/cint"
+    ]
   },
   "engines": {
     "node": ">= 13.2.0"

@@ -36,7 +36,7 @@ test('No variables collected without template.json file.', async () => {
 
   const contents = readFileSync(join(destination, 'index.js'), 'utf8')
 
-  expect(contents).toEqual(`console.log('test')`)
+  expect(contents).toEqual(`console.log('test')\n`)
 
   rimraf.sync(destination)
 })
@@ -57,7 +57,7 @@ test('Static variables from template.json are written.', async () => {
 
   const contents = readFileSync(join(destination, 'index.ts'), 'utf8')
 
-  expect(contents).toEqual(`console.log('static-variable')`)
+  expect(contents).toEqual(`console.log('static-variable')\n`)
 
   rimraf.sync(destination)
 })
@@ -132,6 +132,36 @@ test('Nested files are written as well and static, dynamic variables can be comb
 
   expect(contentsRoot).toEqual(expectedContents)
   expect(contentsNested).toEqual(expectedContents)
+
+  rimraf.sync(destination)
+})
+
+test('Specific files can be excluded from transform.', async () => {
+  const templateDirectory = await getTemplateDirectory(
+    'exclude-transform',
+    join(process.cwd(), 'test/fixture/variable')
+  )
+  const config = getConfig(templateDirectory)
+
+  expect(config.excludeTransform).toEqual(['excluded.ts'])
+
+  const variables = await collectVariables(config)
+
+  await writeFiles(destination, variables, templateDirectory, config)
+
+  expect(existsSync(join(destination, 'index.tsx'))).toBeTruthy()
+  expect(existsSync(join(destination, 'excluded.ts'))).toBeTruthy()
+  expect(existsSync(join(destination, 'index.js'))).toBeFalsy()
+  expect(existsSync(join(destination, 'template.json'))).toBeFalsy()
+
+  const contents = readFileSync(join(destination, 'index.tsx'), 'utf8')
+  const contentsExcluded = readFileSync(
+    join(destination, 'excluded.ts'),
+    'utf8'
+  )
+
+  expect(contents).toEqual(`console.log('name description')\n`)
+  expect(contentsExcluded).toEqual(`console.log('<%= keep.this %> name')\n`)
 
   rimraf.sync(destination)
 })

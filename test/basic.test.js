@@ -13,7 +13,7 @@ test('Fails for non-existent packages.', async () => {
     throw new Error('Exit')
   })
 
-  await expect(loadPackage('papua')).rejects.toEqual(new Error('Exit'))
+  await expect(loadPackage('pamua')).rejects.toEqual(new Error('Exit'))
 
   expect(mockProcessExit).toHaveBeenCalledWith(0)
 })

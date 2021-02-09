@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "download-git-repo": "^3.0.2",
-    "ejs": "^3.1.5",
+    "ejs": "^3.1.6",
     "isbinaryfile": "^4.0.6",
-    "logua": "^2.1.2",
+    "logua": "^2.1.3",
     "node-fetch": "^2.6.1",
     "prompts": "^2.4.0",
     "rimraf": "^3.0.2",
@@ -22,11 +22,10 @@
   },
   "type": "module",
   "main": "index.js",
-  "bin": "cli/index.js",
+  "bin": "cli.js",
   "source": "index.js",
   "types": "index.d.ts",
   "files": [
-    "cli",
     "utility",
     "*.js",
     "index.d.ts"
@@ -34,7 +33,7 @@
   "devDependencies": {
     "is-png": "^2.0.0",
     "mock-stdin": "^1.0.0",
-    "padua": "0.1.4",
+    "padua": "^0.2.5",
     "read-chunk": "^3.2.0"
   },
   "prettier": "padua/configuration/.prettierrc.json",
@@ -43,16 +42,11 @@
     "rules": {
       "import/extensions": [
         2,
-        "always"
+        "ignorePackages"
       ]
     }
   },
   "jest": {
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "./node_modules/padua/configuration/tsconfig.json"
-      }
-    },
     "modulePathIgnorePatterns": [
       "test/fixture"
     ],
@@ -62,14 +56,13 @@
         {
           "configFile": "./node_modules/padua/configuration/.babelrc"
         }
-      ],
-      "^.+\\.tsx?$": "ts-jest"
+      ]
     },
     "transformIgnorePatterns": [
       "node_modules/cint"
     ]
   },
   "engines": {
-    "node": ">= 13.2.0"
+    "node": ">= 14"
   }
 }

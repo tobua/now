@@ -11,8 +11,10 @@ Create projects from templates.
 Install template for compatible packages like this:
 
 ```console
-npm init now papua
+npm init now papua --yes
 ```
+
+`--yes` avoids the prompt by `npm` to install this package.
 
 ## Options
 

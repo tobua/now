@@ -1,7 +1,7 @@
 {
   "name": "create-now",
   "description": "Create projects from templates.",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "repository": "github:tobua/now",
   "license": "MIT",
   "scripts": {
@@ -27,9 +27,11 @@
   "source": "index.js",
   "types": "index.d.ts",
   "files": [
+    "**/*.js",
+    "index.d.ts",
+    "!test",
     "utility",
-    "*.js",
-    "index.d.ts"
+    "*.js"
   ],
   "devDependencies": {
     "is-png": "^2.0.0",
@@ -53,6 +55,10 @@
     ],
     "transform": {
       "^.+\\.jsx?$": [
+        "babel-jest",
+        {
+          "configFile": "./node_modules/padua/configuration/.babelrc"
+        },
         "babel-jest",
         {
           "configFile": "./node_modules/padua/configuration/.babelrc"

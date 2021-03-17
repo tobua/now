@@ -102,3 +102,19 @@ test('Automatically selects default template if no selection provided.', async (
     join(process.cwd(), 'test/fixture/default/default')
   )
 })
+
+test('Successfully downloads template from main branch repository.', async () => {
+  cleanup()
+
+  expect(existsSync(gitStorePathAbsolute)).toBeFalsy()
+  await downloadTemplate('tobua/squak')
+  expect(existsSync(gitStorePathAbsolute)).toBeTruthy()
+  // Template directory exists.
+  expect(existsSync(join(gitStorePathAbsolute, 'template'))).toBeTruthy()
+  // Whole repo is checked out.
+  expect(existsSync(join(gitStorePathAbsolute, 'package.json'))).toBeTruthy()
+
+  cleanup()
+
+  expect(existsSync(gitStorePathAbsolute)).toBeFalsy()
+})

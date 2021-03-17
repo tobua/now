@@ -1,5 +1,7 @@
 const { loadPackage } = require('../utility/load-package.js')
 
+jest.setTimeout(20000)
+
 test('Returns correct url for various packages.', async () => {
   let url = await loadPackage('padua')
   expect(url).toEqual('tobua/padua')

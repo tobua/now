@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.12](https://github.com/tobua/now/compare/v0.1.11...v0.1.12) (2021-03-20)
+
+
+### Bug Fixes
+
+* **template:** a README file alone does not indicate a single template ([7b63f9a](https://github.com/tobua/now/commit/7b63f9a4e646abd7e5bee8ccbf8132b77ce18415))
+
 ### [0.1.11](https://github.com/tobua/now/compare/v0.1.10...v0.1.11) (2021-03-17)
 
 

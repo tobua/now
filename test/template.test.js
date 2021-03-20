@@ -111,10 +111,18 @@ test('Successfully downloads template from main branch repository.', async () =>
   expect(existsSync(gitStorePathAbsolute)).toBeTruthy()
   // Template directory exists.
   expect(existsSync(join(gitStorePathAbsolute, 'template'))).toBeTruthy()
+  expect(
+    existsSync(join(gitStorePathAbsolute, 'template/full/app.ts'))
+  ).toBeTruthy()
   // Whole repo is checked out.
   expect(existsSync(join(gitStorePathAbsolute, 'package.json'))).toBeTruthy()
+})
+
+test('Finds template even when README present in template folder.', async () => {
+  // Uses template downloaded in previous test.
+  const templateDirectory = await getTemplateDirectory('full')
+
+  expect(templateDirectory).toEqual(join(gitStorePathAbsolute, 'template/full'))
 
   cleanup()
-
-  expect(existsSync(gitStorePathAbsolute)).toBeFalsy()
 })

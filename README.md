@@ -10,7 +10,7 @@ Create projects from templates.
 
 Install template for compatible packages like this:
 
-```console
+```
 npm init now papua --yes
 ```
 
@@ -18,7 +18,7 @@ npm init now papua --yes
 
 ## Options
 
-```console
+```
 npm init now npm-package-name [destination] [template]
 ```
 
@@ -28,7 +28,7 @@ The second argument can be used to describe the location where to place the proj
 
 Use TypeScript template and place result in `/my-app` folder.
 
-```console
+```
 npm init now papua my-app typescript
 ```
 
@@ -39,6 +39,7 @@ The following npm packages provide templates to install with `now`.
 - [papua](https://github.com/tobua/papua)
 - [padua](https://github.com/tobua/padua)
 - [naven](https://github.com/tobua/naven)
+- [squak](https://github.com/tobua/squak)
 
 ## Convention
 

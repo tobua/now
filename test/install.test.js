@@ -20,7 +20,7 @@ test('Dependencies are installed if there are any.', async () => {
 
   expect(existsSync(join(destination, 'package.json'))).toBeTruthy()
   expect(existsSync(join(destination, 'package-lock.json'))).toBeTruthy()
-  expect(existsSync(join(destination, 'node_modules/padua'))).toBeTruthy()
+  expect(existsSync(join(destination, 'node_modules/react'))).toBeTruthy()
 
   rimraf.sync(destination)
 })
@@ -37,7 +37,7 @@ test('Nothing installed if noInstall option is truthy.', async () => {
 
   expect(existsSync(join(destination, 'package.json'))).toBeTruthy()
   expect(existsSync(join(destination, 'package-lock.json'))).toBeFalsy()
-  expect(existsSync(join(destination, 'node_modules/padua'))).toBeFalsy()
+  expect(existsSync(join(destination, 'node_modules/react'))).toBeFalsy()
 
   rimraf.sync(destination)
 })

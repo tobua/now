@@ -36,7 +36,7 @@
   "devDependencies": {
     "is-png": "^2.0.0",
     "mock-stdin": "^1.0.0",
-    "padua": "^0.3.3",
+    "padua": "^0.3.4",
     "read-chunk": "^3.2.0"
   },
   "prettier": "padua/configuration/.prettierrc.json",

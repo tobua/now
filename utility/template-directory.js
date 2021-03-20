@@ -52,7 +52,10 @@ export const getTemplateDirectory = async (
   const directories = readdirSync(templatesPath, { withFileTypes: true })
     .filter((path) => {
       if (!path.isDirectory()) {
-        singleTemplate = true
+        // Adding a README file is fine.
+        if (path.name.toLowerCase() !== 'readme.md') {
+          singleTemplate = true
+        }
         return false
       }
 

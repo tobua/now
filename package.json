@@ -1,7 +1,7 @@
 {
   "name": "create-now",
   "description": "Create projects from templates.",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "repository": "github:tobua/now",
   "license": "MIT",
   "scripts": {
@@ -27,11 +27,10 @@
   "source": "index.js",
   "types": "index.d.ts",
   "files": [
-    "**/*.js",
-    "index.d.ts",
-    "!test",
     "utility",
-    "*.js"
+    "*.js",
+    "*.d.ts",
+    "!test"
   ],
   "devDependencies": {
     "is-png": "^3.0.0",

@@ -1,10 +1,10 @@
-const { existsSync } = require('fs')
-const { join } = require('path')
-const rimraf = require('rimraf')
-const { getTemplateDirectory } = require('../utility/template-directory.js')
-const { getConfig } = require('../utility/get-config.js')
-const { installDependencies } = require('../utility/install-dependencies.js')
-const { writeFiles } = require('../utility/write-files.js')
+import { existsSync } from 'fs'
+import { join } from 'path'
+import rimraf from 'rimraf'
+import { getTemplateDirectory } from '../utility/template-directory.js'
+import { getConfig } from '../utility/get-config.js'
+import { installDependencies } from '../utility/install-dependencies.js'
+import { writeFiles } from '../utility/write-files.js'
 
 jest.setTimeout(50000)
 

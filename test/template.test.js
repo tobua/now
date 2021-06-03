@@ -1,10 +1,10 @@
-const { existsSync } = require('fs')
-const { join } = require('path')
-const { stdin } = require('mock-stdin')
-const { gitStorePathAbsolute } = require('../config.js')
-const { cleanup } = require('../utility/helper.js')
-const { downloadTemplate } = require('../utility/download-template.js')
-const { getTemplateDirectory } = require('../utility/template-directory.js')
+import { existsSync } from 'fs'
+import { join } from 'path'
+import { stdin } from 'mock-stdin'
+import { gitStorePathAbsolute } from '../config.js'
+import { cleanup } from '../utility/helper.js'
+import { downloadTemplate } from '../utility/download-template.js'
+import { getTemplateDirectory } from '../utility/template-directory.js'
 
 jest.setTimeout(30000)
 

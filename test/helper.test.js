@@ -1,7 +1,7 @@
-const { existsSync } = require('fs')
-const { join } = require('path')
-const rimraf = require('rimraf')
-const { getDestinationPath, validatePackageName } = require('../utility/helper')
+import { existsSync } from 'fs'
+import { join } from 'path'
+import rimraf from 'rimraf'
+import { getDestinationPath, validatePackageName } from '../utility/helper.js'
 
 test('Validates package name correctly.', () => {
   jest.spyOn(process, 'exit').mockImplementation(() => {

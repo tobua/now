@@ -1,4 +1,4 @@
-const { loadPackage } = require('../utility/load-package.js')
+import { loadPackage } from '../utility/load-package.js'
 
 jest.setTimeout(20000)
 

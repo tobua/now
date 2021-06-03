@@ -1,13 +1,13 @@
-const { existsSync, readFileSync } = require('fs')
-const { join } = require('path')
-const { stdin } = require('mock-stdin')
-const rimraf = require('rimraf')
-const readChunk = require('read-chunk')
-const isPng = require('is-png')
-const { getTemplateDirectory } = require('../utility/template-directory.js')
-const { getConfig } = require('../utility/get-config.js')
-const { collectVariables } = require('../utility/collect-variables.js')
-const { writeFiles } = require('../utility/write-files.js')
+import { existsSync, readFileSync } from 'fs'
+import { join } from 'path'
+import { stdin } from 'mock-stdin'
+import rimraf from 'rimraf'
+import readChunk from 'read-chunk'
+import isPng from 'is-png'
+import { getTemplateDirectory } from '../utility/template-directory.js'
+import { getConfig } from '../utility/get-config.js'
+import { collectVariables } from '../utility/collect-variables.js'
+import { writeFiles } from '../utility/write-files.js'
 
 jest.setTimeout(30000)
 

@@ -13,10 +13,10 @@
   "dependencies": {
     "download-git-repo": "^3.0.2",
     "ejs": "^3.1.6",
-    "isbinaryfile": "^4.0.6",
+    "isbinaryfile": "^4.0.8",
     "logua": "^2.1.4",
     "node-fetch": "^2.6.1",
-    "prompts": "^2.4.0",
+    "prompts": "^2.4.1",
     "rimraf": "^3.0.2",
     "validate-npm-package-name": "^3.0.0"
   },
@@ -34,9 +34,9 @@
     "*.js"
   ],
   "devDependencies": {
-    "is-png": "^2.0.0",
+    "is-png": "^3.0.0",
     "mock-stdin": "^1.0.0",
-    "padua": "^0.3.4",
+    "padua": "^0.3.6",
     "read-chunk": "^3.2.0"
   },
   "prettier": "padua/configuration/.prettierrc.json",
@@ -55,10 +55,6 @@
     ],
     "transform": {
       "^.+\\.jsx?$": [
-        "babel-jest",
-        {
-          "configFile": "./node_modules/padua/configuration/.babelrc"
-        },
         "babel-jest",
         {
           "configFile": "./node_modules/padua/configuration/.babelrc"

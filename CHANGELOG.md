@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.14](https://github.com/tobua/now/compare/v0.1.13...v0.1.14) (2021-09-08)
+
+
+### Bug Fixes
+
+* **package:** update dependencies and add additional fields ([e1fcf40](https://github.com/tobua/now/commit/e1fcf402de6e51828a3b925655834a40862eae05))
+* **path:** path also accepts absolute values ([41c3952](https://github.com/tobua/now/commit/41c3952572cdebece0e04c7486ae25eab0f69d49))
+* **test:** node:util imports don't work with require in node 14 ([bbd9e72](https://github.com/tobua/now/commit/bbd9e72f6e69c9c1bd40c7ef13a6e450cc09bf77))
+
 ### [0.1.13](https://github.com/tobua/now/compare/v0.1.12...v0.1.13) (2021-06-03)
 
 ### [0.1.12](https://github.com/tobua/now/compare/v0.1.11...v0.1.12) (2021-03-20)

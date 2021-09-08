@@ -1,3 +1,5 @@
 node_modules
 package-lock.json
 jsconfig.json
+test/download
+.create-now-temporary

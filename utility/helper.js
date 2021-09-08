@@ -5,7 +5,7 @@ import validate from 'validate-npm-package-name'
 import { gitStorePath } from '../config.js'
 import { log } from './log.js'
 
-export const getDestinationPath = (input) => {
+export const getDestinationPath = (input = process.cwd()) => {
   let destinationPath = process.cwd()
 
   if (input && !isAbsolute(input)) {

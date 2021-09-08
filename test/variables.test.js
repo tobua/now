@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { stdin } from 'mock-stdin'
 import rimraf from 'rimraf'
-import readChunk from 'read-chunk'
+import { readChunkSync } from 'read-chunk'
 import isPng from 'is-png'
 import { getTemplateDirectory } from '../utility/template-directory.js'
 import { getConfig } from '../utility/get-config.js'
@@ -183,7 +183,12 @@ test('Non text files will stay intact when copied.', async () => {
   expect(existsSync(join(destination, 'index.js'))).toBeFalsy()
 
   const isValidImage = (fileName) =>
-    isPng(readChunk.sync(join(destination, fileName), 0, 8))
+    isPng(
+      readChunkSync(join(destination, fileName), {
+        length: 8,
+        startPosition: 0,
+      })
+    )
 
   expect(isValidImage('logo.png')).toBeTruthy()
   expect(isValidImage('logo-invalid.png')).toBeFalsy()

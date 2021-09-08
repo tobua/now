@@ -4,6 +4,7 @@
   "version": "0.1.13",
   "repository": "github:tobua/now",
   "license": "MIT",
+  "author": "Matthias Giger",
   "scripts": {
     "test": "padua test"
   },
@@ -15,13 +16,16 @@
     "ejs": "^3.1.6",
     "isbinaryfile": "^4.0.8",
     "logua": "^2.1.4",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.0.0",
     "prompts": "^2.4.1",
     "rimraf": "^3.0.2",
     "validate-npm-package-name": "^3.0.0"
   },
   "type": "module",
   "main": "index.js",
+  "exports": {
+    "default": "./index.js"
+  },
   "sideEffects": true,
   "bin": "cli.js",
   "source": "index.js",
@@ -32,11 +36,18 @@
     "*.d.ts",
     "!test"
   ],
+  "keywords": [
+    "template",
+    "download",
+    "generator",
+    "init"
+  ],
   "devDependencies": {
-    "is-png": "^3.0.0",
+    "is-png": "^3.0.1",
+    "jest-fixture": "^2.0.0",
     "mock-stdin": "^1.0.0",
-    "padua": "^0.3.6",
-    "read-chunk": "^3.2.0"
+    "padua": "^0.3.10",
+    "read-chunk": "^4.0.2"
   },
   "prettier": "padua/configuration/.prettierrc.json",
   "eslintConfig": {

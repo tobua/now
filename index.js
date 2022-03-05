@@ -1,8 +1,4 @@
-import {
-  getDestinationPath,
-  validatePackageName,
-  cleanup,
-} from './utility/helper.js'
+import { getDestinationPath, validatePackageName, cleanup } from './utility/helper.js'
 import { loadPackage } from './utility/load-package.js'
 import { downloadTemplate } from './utility/download-template.js'
 import { getTemplateDirectory } from './utility/template-directory.js'

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/tobua/now/raw/master/logo.png" alt="now" width="300">
+  <img src="https://github.com/tobua/now/raw/main/logo.png" alt="now" width="300">
 </p>
 
 # now

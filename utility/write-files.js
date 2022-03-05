@@ -1,10 +1,4 @@
-import {
-  readdirSync,
-  writeFileSync,
-  existsSync,
-  mkdirSync,
-  copyFileSync,
-} from 'fs'
+import { readdirSync, writeFileSync, existsSync, mkdirSync, copyFileSync } from 'fs'
 import { join } from 'path'
 import ejs from 'ejs'
 import { isBinaryFileSync } from 'isbinaryfile'
@@ -49,44 +43,25 @@ const writeDirectoryFiles = (
 
     // Do not add variables to binary files like images.
     if (isBinaryFileSync(join(directory, path.name))) {
-      copyFileSync(
-        join(directory, path.name),
-        join(currentDestinationPath, path.name)
-      )
+      copyFileSync(join(directory, path.name), join(currentDestinationPath, path.name))
       return
     }
 
-    ejs.renderFile(
-      join(directory, path.name),
-      variables,
-      ejsOptions,
-      (error, result) => {
-        if (error) {
-          log(`Error rendering template for ${path.name}`, 'error')
-        }
-
-        writeFileSync(join(currentDestinationPath, path.name), result)
+    ejs.renderFile(join(directory, path.name), variables, ejsOptions, (error, result) => {
+      if (error) {
+        log(`Error rendering template for ${path.name}`, 'error')
       }
-    )
+
+      writeFileSync(join(currentDestinationPath, path.name), result)
+    })
   })
 }
 
-export const writeFiles = (
-  destinationPath,
-  variables,
-  templateDirectory,
-  config
-) => {
+export const writeFiles = (destinationPath, variables, templateDirectory, config) => {
   // Ensure destination directory exists.
   if (!existsSync(destinationPath)) {
     mkdirSync(destinationPath)
   }
 
-  writeDirectoryFiles(
-    templateDirectory,
-    variables,
-    destinationPath,
-    '.',
-    config
-  )
+  writeDirectoryFiles(templateDirectory, variables, destinationPath, '.', config)
 }

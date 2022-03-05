@@ -125,10 +125,7 @@ test('Nested files are written as well and static, dynamic variables can be comb
   expect(existsSync(join(destination, 'template.json'))).toBeFalsy()
 
   const contentsRoot = readFileSync(join(destination, 'package.json'), 'utf8')
-  const contentsNested = readFileSync(
-    join(destination, 'deep/package.json'),
-    'utf8'
-  )
+  const contentsNested = readFileSync(join(destination, 'deep/package.json'), 'utf8')
 
   const expectedContents = `{\n    "name": "first",\n    "description": "second",\n    "version": "1.0.0"\n}`
 
@@ -157,10 +154,7 @@ test('Specific files can be excluded from transform.', async () => {
   expect(existsSync(join(destination, 'template.json'))).toBeFalsy()
 
   const contents = readFileSync(join(destination, 'index.tsx'), 'utf8')
-  const contentsExcluded = readFileSync(
-    join(destination, 'excluded.ts'),
-    'utf8'
-  )
+  const contentsExcluded = readFileSync(join(destination, 'excluded.ts'), 'utf8')
 
   expect(contents).toEqual(`console.log('name description')\n`)
   expect(contentsExcluded).toEqual(`console.log('<%= keep.this %> name')\n`)

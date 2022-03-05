@@ -29,17 +29,11 @@ export const installDependencies = (config, destination) => {
 
   let hasContents = false
 
-  if (
-    typeof dependencies === 'object' &&
-    Object.keys(dependencies).length > 0
-  ) {
+  if (typeof dependencies === 'object' && Object.keys(dependencies).length > 0) {
     hasContents = true
   }
 
-  if (
-    typeof devDependencies === 'object' &&
-    Object.keys(devDependencies).length > 0
-  ) {
+  if (typeof devDependencies === 'object' && Object.keys(devDependencies).length > 0) {
     hasContents = true
   }
 

@@ -19,7 +19,8 @@ test('Node API downloads and installs papua default package.', async () => {
 
   const files = listFilesMatching('*', fixtureFolder)
 
-  expect(files.length).toBe(4)
+  expect(files.length).toBe(5)
+  expect(files).toContain('.gitignore')
   expect(files).toContain('index.js')
   expect(files).toContain('package.json')
   expect(files).toContain('jsconfig.json')
@@ -33,7 +34,8 @@ test('Node API downloads and installs papua typescript package.', async () => {
 
   const files = listFilesMatching('*', fixtureFolder)
 
-  expect(files.length).toBe(4)
+  expect(files.length).toBe(5)
+  expect(files).toContain('.gitignore')
   expect(files).toContain('index.tsx')
   expect(files).toContain('package.json')
   expect(files).toContain('tsconfig.json')

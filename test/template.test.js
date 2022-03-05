@@ -44,10 +44,7 @@ test('Locates template in main directory.', async () => {
   expect(templatePath).toEqual(join(process.cwd(), 'test/fixture/basic'))
 
   // Same result with default preselected.
-  templatePath = await getTemplateDirectory(
-    'default',
-    join(process.cwd(), 'test/fixture/basic')
-  )
+  templatePath = await getTemplateDirectory('default', join(process.cwd(), 'test/fixture/basic'))
 
   expect(templatePath).toEqual(join(process.cwd(), 'test/fixture/basic'))
 })
@@ -66,9 +63,7 @@ test('Recoginizes several templates are available.', async () => {
     join(process.cwd(), 'test/fixture/nested')
   )
 
-  expect(templatePath).toEqual(
-    join(process.cwd(), 'test/fixture/nested/second')
-  )
+  expect(templatePath).toEqual(join(process.cwd(), 'test/fixture/nested/second'))
 })
 
 test('Fails when given template not available.', async () => {
@@ -98,9 +93,7 @@ test('Automatically selects default template if no selection provided.', async (
     undefined,
     join(process.cwd(), 'test/fixture/default')
   )
-  expect(templatePath).toEqual(
-    join(process.cwd(), 'test/fixture/default/default')
-  )
+  expect(templatePath).toEqual(join(process.cwd(), 'test/fixture/default/default'))
 })
 
 test('Successfully downloads template from main branch repository.', async () => {
@@ -111,9 +104,7 @@ test('Successfully downloads template from main branch repository.', async () =>
   expect(existsSync(gitStorePathAbsolute)).toBeTruthy()
   // Template directory exists.
   expect(existsSync(join(gitStorePathAbsolute, 'template'))).toBeTruthy()
-  expect(
-    existsSync(join(gitStorePathAbsolute, 'template/full/app.ts'))
-  ).toBeTruthy()
+  expect(existsSync(join(gitStorePathAbsolute, 'template/full/app.ts'))).toBeTruthy()
   // Whole repo is checked out.
   expect(existsSync(join(gitStorePathAbsolute, 'package.json'))).toBeTruthy()
 })

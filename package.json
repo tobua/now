@@ -1,7 +1,7 @@
 {
   "name": "create-now",
   "description": "Create projects from templates.",
-  "version": "0.1.14",
+  "version": "0.0.0-development",
   "repository": "github:tobua/now",
   "license": "MIT",
   "author": "Matthias Giger",
@@ -16,17 +16,17 @@
     "ejs": "^3.1.6",
     "isbinaryfile": "^4.0.8",
     "logua": "^2.1.4",
-    "node-fetch": "^3.0.0",
-    "prompts": "^2.4.1",
+    "node-fetch": "^3.2.1",
+    "prompts": "^2.4.2",
     "rimraf": "^3.0.2",
     "validate-npm-package-name": "^3.0.0"
   },
   "type": "module",
+  "sideEffects": true,
   "main": "index.js",
   "exports": {
     "default": "./index.js"
   },
-  "sideEffects": true,
   "bin": "cli.js",
   "source": "index.js",
   "types": "index.d.ts",
@@ -44,9 +44,9 @@
   ],
   "devDependencies": {
     "is-png": "^3.0.1",
-    "jest-fixture": "^2.0.0",
+    "jest-fixture": "^3.0.0",
     "mock-stdin": "^1.0.0",
-    "padua": "^0.3.10",
+    "padua": "^0.5.3",
     "read-chunk": "^4.0.2"
   },
   "prettier": "padua/configuration/.prettierrc.json",

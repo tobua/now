@@ -11,7 +11,9 @@ Create projects from templates.
 Install template for compatible packages like this:
 
 ```
-npm init now papua --yes
+npm init --yes now papua
+# or the same thing with npx
+npx --yes create-now papua
 ```
 
 `--yes` avoids the prompt by `npm` to install this package.
@@ -19,7 +21,7 @@ npm init now papua --yes
 ## Options
 
 ```
-npm init now npm-package-name [destination] [template]
+npm init now npm-package-name [destination] [template] [variable-values]
 ```
 
 The second argument can be used to describe the location where to place the project while the third describes the template to use. Both parameters are optional. If no location is provided the current directory will be used. If there is more than one template available for the package, but no template selected then a prompt will appear.
@@ -99,6 +101,12 @@ The variable contents need to be defined in a `template.json` file at the top of
     }
   ]
 }
+```
+
+To avoid the prompt the variables can also be supplied as arguments:
+
+```
+npm init --yes now padua ./my-plugin typescript name=my-plugin description="What it does."
 ```
 
 ### Options

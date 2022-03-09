@@ -9,9 +9,11 @@ import { installDependencies } from './utility/install-dependencies.js'
 import { getConfig } from './utility/get-config.js'
 import { log } from './utility/log.js'
 
-const packageName = validatePackageName(process.argv.slice(2)[0])
-const destination = getDestinationPath(process.argv.slice(2)[1])
-const template = process.argv.slice(2)[2]
+// eslint-disable-next-line prefer-const
+let [packageName, destination, template, ...variableArguments] = process.argv.slice(2)
+
+packageName = validatePackageName(packageName)
+destination = getDestinationPath(destination)
 
 cleanup()
 
@@ -19,7 +21,7 @@ const url = await loadPackage(packageName)
 await downloadTemplate(url)
 const templateDirectory = await getTemplateDirectory(template)
 const config = getConfig(templateDirectory)
-const variables = await collectVariables(config)
+const variables = await collectVariables(config, variableArguments)
 writeFiles(destination, variables, templateDirectory, config)
 installDependencies(config, destination)
 

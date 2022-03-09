@@ -191,3 +191,21 @@ test('Non text files will stay intact when copied.', async () => {
 
   rimraf.sync(destination)
 })
+
+test(`Doesn't prompt for variables provided as cli arguments.`, async () => {
+  const templateDirectory = await getTemplateDirectory(
+    'dynamic',
+    join(process.cwd(), 'test/fixture/variable')
+  )
+  const config = getConfig(templateDirectory)
+  const variables = await collectVariables(config, ['name=test', 'description=Hello again.'])
+  await writeFiles(destination, variables, templateDirectory)
+
+  expect(existsSync(join(destination, 'index.ts'))).toBeTruthy()
+
+  const contents = readFileSync(join(destination, 'index.ts'), 'utf8')
+
+  expect(contents).toEqual(`console.log('test Hello again.')\n`)
+
+  rimraf.sync(destination)
+})

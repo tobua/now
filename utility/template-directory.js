@@ -1,7 +1,6 @@
 import { existsSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { promptDirectories } from './prompt.js'
-import { gitStorePathAbsolute } from '../config.js'
 import { log } from './log.js'
 
 // singleTemplate: is there only one template available.
@@ -39,10 +38,9 @@ const selectDirectory = async (singleTemplate, directories, template) => {
   return promptDirectories(directories)
 }
 
-export const getTemplateDirectory = async (
-  template,
-  templatesPath = join(gitStorePathAbsolute, 'template')
-) => {
+export const getTemplateDirectory = async (template, cachePath, pathOverride) => {
+  const templatesPath = pathOverride || join(cachePath, 'template')
+
   if (!existsSync(templatesPath)) {
     log('Repository has no /template folder', 'error')
   }

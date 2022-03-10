@@ -1,12 +1,11 @@
 import download from 'download-git-repo'
-import { gitStorePathAbsolute } from '../config.js'
 import { log } from './log.js'
 
-const attemptDownload = (url, callback) => download(url, gitStorePathAbsolute, callback)
+const attemptDownload = (url, cachePath, callback) => download(url, cachePath, callback)
 
-export const downloadTemplate = async (url) => {
+export const downloadTemplate = async (url, cachePath) => {
   await new Promise((done) => {
-    attemptDownload(url, (error) => {
+    attemptDownload(url, cachePath, (error) => {
       if (error) {
         // Plugin defaults to master branch, on error reattempt with main branch.
         attemptDownload(`${url}#main`, (secondError) => {

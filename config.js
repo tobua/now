@@ -1,4 +1,3 @@
-import { join } from 'path'
+import findCacheDir from 'find-cache-dir'
 
-export const gitStorePath = '.create-now-temporary'
-export const gitStorePathAbsolute = join(process.cwd(), gitStorePath)
+export const cachePath = findCacheDir({ name: 'create-now', thunk: true })

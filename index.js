@@ -7,22 +7,29 @@ import { writeFiles } from './utility/write-files.js'
 import { installDependencies } from './utility/install-dependencies.js'
 import { getConfig } from './utility/get-config.js'
 import { log } from './utility/log.js'
+import { cachePath } from './config.js'
 
-export const create = async (packageName, destinationPath, template) => {
+export const create = async (
+  packageName,
+  destinationPath,
+  template = 'default',
+  variableArguments = null
+) => {
   validatePackageName(packageName)
   const destination = getDestinationPath(destinationPath)
+  const cache = cachePath(`${packageName}-${template}`)
 
-  cleanup()
+  cleanup(cache)
 
   const url = await loadPackage(packageName)
-  await downloadTemplate(url)
-  const templateDirectory = await getTemplateDirectory(template)
+  await downloadTemplate(url, cache)
+  const templateDirectory = await getTemplateDirectory(template, cache)
   const config = getConfig(templateDirectory)
-  const variables = await collectVariables(config)
-  await writeFiles(destination, variables, templateDirectory, config)
+  const variables = await collectVariables(config, variableArguments)
+  writeFiles(destination, variables, templateDirectory, config)
   installDependencies(config, destination)
 
-  cleanup()
+  cleanup(cache)
 
   log(`Done, project created in ${destination}`)
 }

@@ -27,11 +27,12 @@ const destination = join(process.cwd(), '.jest-temp')
 test('No variables collected without template.json file.', async () => {
   const templateDirectory = await getTemplateDirectory(
     undefined,
+    undefined,
     join(process.cwd(), 'test/fixture/basic')
   )
   const config = getConfig(templateDirectory)
   const variables = await collectVariables(config)
-  await writeFiles(destination, variables, templateDirectory)
+  writeFiles(destination, variables, templateDirectory)
 
   expect(existsSync(join(destination, 'package.json'))).toBeTruthy()
   expect(existsSync(join(destination, 'index.js'))).toBeTruthy()
@@ -46,11 +47,12 @@ test('No variables collected without template.json file.', async () => {
 test('Static variables from template.json are written.', async () => {
   const templateDirectory = await getTemplateDirectory(
     'static',
+    undefined,
     join(process.cwd(), 'test/fixture/variable')
   )
   const config = getConfig(templateDirectory)
   const variables = await collectVariables(config)
-  await writeFiles(destination, variables, templateDirectory)
+  writeFiles(destination, variables, templateDirectory)
 
   expect(existsSync(join(destination, 'package.json'))).toBeTruthy()
   expect(existsSync(join(destination, 'index.ts'))).toBeTruthy()
@@ -81,11 +83,12 @@ test('Dynamic variables from template.json are prompted and written.', async () 
 
   const templateDirectory = await getTemplateDirectory(
     'dynamic',
+    undefined,
     join(process.cwd(), 'test/fixture/variable')
   )
   const config = getConfig(templateDirectory)
   const variables = await collectVariables(config)
-  await writeFiles(destination, variables, templateDirectory)
+  writeFiles(destination, variables, templateDirectory)
 
   expect(existsSync(join(destination, 'index.ts'))).toBeTruthy()
   expect(existsSync(join(destination, 'template.json'))).toBeFalsy()
@@ -114,11 +117,12 @@ test('Nested files are written as well and static, dynamic variables can be comb
 
   const templateDirectory = await getTemplateDirectory(
     'nested',
+    undefined,
     join(process.cwd(), 'test/fixture/variable')
   )
   const config = getConfig(templateDirectory)
   const variables = await collectVariables(config)
-  await writeFiles(destination, variables, templateDirectory)
+  writeFiles(destination, variables, templateDirectory)
 
   expect(existsSync(join(destination, 'package.json'))).toBeTruthy()
   expect(existsSync(join(destination, 'deep/package.json'))).toBeTruthy()
@@ -138,6 +142,7 @@ test('Nested files are written as well and static, dynamic variables can be comb
 test('Specific files can be excluded from transform.', async () => {
   const templateDirectory = await getTemplateDirectory(
     'exclude-transform',
+    undefined,
     join(process.cwd(), 'test/fixture/variable')
   )
   const config = getConfig(templateDirectory)
@@ -146,7 +151,7 @@ test('Specific files can be excluded from transform.', async () => {
 
   const variables = await collectVariables(config)
 
-  await writeFiles(destination, variables, templateDirectory, config)
+  writeFiles(destination, variables, templateDirectory, config)
 
   expect(existsSync(join(destination, 'index.tsx'))).toBeTruthy()
   expect(existsSync(join(destination, 'excluded.ts'))).toBeTruthy()
@@ -165,9 +170,10 @@ test('Specific files can be excluded from transform.', async () => {
 test('Non text files will stay intact when copied.', async () => {
   const templateDirectory = await getTemplateDirectory(
     'image',
+    undefined,
     join(process.cwd(), 'test/fixture/variable')
   )
-  await writeFiles(destination, {}, templateDirectory, {})
+  writeFiles(destination, {}, templateDirectory, {})
 
   expect(existsSync(join(destination, 'index.ts'))).toBeTruthy()
   expect(existsSync(join(destination, 'logo.png'))).toBeTruthy()
@@ -195,11 +201,31 @@ test('Non text files will stay intact when copied.', async () => {
 test(`Doesn't prompt for variables provided as cli arguments.`, async () => {
   const templateDirectory = await getTemplateDirectory(
     'dynamic',
+    undefined,
     join(process.cwd(), 'test/fixture/variable')
   )
   const config = getConfig(templateDirectory)
   const variables = await collectVariables(config, ['name=test', 'description=Hello again.'])
-  await writeFiles(destination, variables, templateDirectory)
+  writeFiles(destination, variables, templateDirectory)
+
+  expect(existsSync(join(destination, 'index.ts'))).toBeTruthy()
+
+  const contents = readFileSync(join(destination, 'index.ts'), 'utf8')
+
+  expect(contents).toEqual(`console.log('test Hello again.')\n`)
+
+  rimraf.sync(destination)
+})
+
+test(`Doesn't prompt for variables provided as object.`, async () => {
+  const templateDirectory = await getTemplateDirectory(
+    'dynamic',
+    undefined,
+    join(process.cwd(), 'test/fixture/variable')
+  )
+  const config = getConfig(templateDirectory)
+  const variables = await collectVariables(config, { name: 'test', description: 'Hello again.' })
+  writeFiles(destination, variables, templateDirectory)
 
   expect(existsSync(join(destination, 'index.ts'))).toBeTruthy()
 

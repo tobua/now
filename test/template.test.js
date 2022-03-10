@@ -128,3 +128,34 @@ test('Finds template even when README present in template folder.', async () => 
 
   cleanup(cache)
 })
+
+test('Downloads multiple templates in parallel.', async () => {
+  const cachePadua = cachePath('padua-default')
+  const cachePapua = cachePath('papua-default')
+
+  cleanup(cachePadua)
+  cleanup(cachePapua)
+
+  expect(existsSync(cachePadua)).toBeFalsy()
+  expect(existsSync(cachePapua)).toBeFalsy()
+
+  const paduaDownload = downloadTemplate('tobua/padua', cachePadua)
+  const papuaDownload = downloadTemplate('tobua/papua', cachePapua)
+
+  await Promise.all([paduaDownload, papuaDownload])
+
+  expect(existsSync(cachePadua)).toBeTruthy()
+  expect(existsSync(cachePapua)).toBeTruthy()
+  // Template directory exists.
+  expect(existsSync(join(cachePadua, 'template'))).toBeTruthy()
+  expect(existsSync(join(cachePapua, 'template'))).toBeTruthy()
+  // Whole repo is checked out.
+  expect(existsSync(join(cachePadua, 'package.json'))).toBeTruthy()
+  expect(existsSync(join(cachePapua, 'package.json'))).toBeTruthy()
+
+  cleanup(cachePadua)
+  cleanup(cachePapua)
+
+  expect(existsSync(cachePadua)).toBeFalsy()
+  expect(existsSync(cachePapua)).toBeFalsy()
+})

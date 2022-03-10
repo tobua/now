@@ -1,4 +1,5 @@
 import { loadPackage } from '../utility/load-package.js'
+import { cachePath } from '../config.js'
 
 jest.setTimeout(20000)
 
@@ -18,4 +19,9 @@ test('Fails for non-existent packages.', async () => {
   await expect(loadPackage('pamua')).rejects.toEqual(new Error('Exit'))
 
   expect(mockProcessExit).toHaveBeenCalledWith(0)
+})
+
+test('Finds config path.', () => {
+  const cache = cachePath(`papua-default`)
+  expect(cache).toBeDefined()
 })

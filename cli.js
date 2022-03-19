@@ -10,6 +10,10 @@ import { getConfig } from './utility/get-config.js'
 import { log } from './utility/log.js'
 import { cachePath } from './config.js'
 
+// Remove additional parameter when used with flag like --yes in older node versions.
+if (process.argv[2] === 'now') {
+    process.argv.splice(2, 1)
+}
 // eslint-disable-next-line prefer-const
 let [packageName, destination, template = 'default', ...variableArguments] = process.argv.slice(2)
 

@@ -43,7 +43,7 @@ export const installDependencies = (config, destination) => {
 
   log('installing dependencies')
 
-  execSync('npm install', { stdio: 'inherit', cwd: destination })
+  execSync('npm install --legacy-peer-deps', { stdio: 'inherit', cwd: destination })
 
   log('dependencies installed')
 }

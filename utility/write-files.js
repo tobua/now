@@ -38,7 +38,7 @@ const writeDirectoryFiles = (
     const currentDestinationPath = join(destinationPath, relativePath)
 
     if (!existsSync(currentDestinationPath)) {
-      mkdirSync(currentDestinationPath)
+      mkdirSync(currentDestinationPath, { recursive: true })
     }
 
     // Do not add variables to binary files like images.

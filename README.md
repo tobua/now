@@ -10,7 +10,7 @@ Create projects from templates.
 
 Install template for compatible packages like this:
 
-```
+```sh
 npm init --yes now papua
 # or the same thing with npx
 npx --yes create-now papua
@@ -20,7 +20,7 @@ npx --yes create-now papua
 
 ## Options
 
-```
+```sh
 npm init now npm-package-name [destination] [template] [variable-values]
 ```
 
@@ -28,10 +28,16 @@ The second argument can be used to describe the location where to place the proj
 
 ### Example
 
-Use TypeScript template and place result in `/my-app` folder.
+Use the papua build tool with the `website` template and place result in `/my-site` folder.
 
+```sh
+npm init now papua my-site website
 ```
-npm init now papua my-app typescript
+
+Create a React Native app managed with numic inside the `/my-app` folder avoiding the prompt for a bundle name by presetting the variable.
+
+```sh
+npm init now numic my-app default name=tesla
 ```
 
 ## Templates

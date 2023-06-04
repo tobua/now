@@ -1,7 +1,6 @@
+import { test, expect, vi } from 'vitest'
 import { loadPackage } from '../utility/load-package.js'
 import { cachePath } from '../config.js'
-
-jest.setTimeout(20000)
 
 test('Returns correct url for various packages.', async () => {
   let url = await loadPackage('padua')
@@ -11,7 +10,7 @@ test('Returns correct url for various packages.', async () => {
 })
 
 test('Fails for non-existent packages.', async () => {
-  const mockProcessExit = jest.spyOn(process, 'exit').mockImplementation(() => {
+  const mockProcessExit = vi.spyOn(process, 'exit').mockImplementation(() => {
     // Throw instead of exit, to stop execution.
     throw new Error('Exit')
   })

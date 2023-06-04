@@ -1,10 +1,10 @@
-import { existsSync } from 'fs'
+import { existsSync, rmSync } from 'fs'
 import { join } from 'path'
-import rimraf from 'rimraf'
+import { test, expect, vi } from 'vitest'
 import { getDestinationPath, validatePackageName } from '../utility/helper.js'
 
 test('Validates package name correctly.', () => {
-  jest.spyOn(process, 'exit').mockImplementation(() => {
+  vi.spyOn(process, 'exit').mockImplementation(() => {
     // Throw instead of exit, to stop execution.
     throw new Error('Exit')
   })
@@ -36,8 +36,8 @@ test('Returns correct destination paths.', () => {
   expect(existsSync(join(cwd, 'some/where'))).toBeTruthy()
 
   // Clean up created directories.
-  rimraf.sync(join(cwd, 'somewhere'))
-  rimraf.sync(join(cwd, 'some'))
+  rmSync(join(cwd, 'somewhere'), { recursive: true })
+  rmSync(join(cwd, 'some'), { recursive: true })
 
   // Directories have been removed.
   expect(existsSync(join(cwd, 'somewhere'))).toBeFalsy()

@@ -1,15 +1,13 @@
-import { existsSync, readFileSync } from 'fs'
+import { existsSync, readFileSync, rmSync } from 'fs'
 import { join } from 'path'
 import { stdin } from 'mock-stdin'
-import rimraf from 'rimraf'
 import { readChunkSync } from 'read-chunk'
 import isPng from 'is-png'
+import { test, expect, afterAll, beforeAll, afterEach } from 'vitest'
 import { getTemplateDirectory } from '../utility/template-directory.js'
 import { getConfig } from '../utility/get-config.js'
 import { collectVariables } from '../utility/collect-variables.js'
 import { writeFiles } from '../utility/write-files.js'
-
-jest.setTimeout(30000)
 
 let io = null
 beforeAll(() => {
@@ -17,12 +15,16 @@ beforeAll(() => {
 })
 afterAll(() => io.restore())
 
+const destination = join(process.cwd(), '.jest-temp')
+
+afterEach(() => {
+  rmSync(destination, { recursive: true })
+})
+
 const keys = {
   down: '\x1B\x5B\x42',
   enter: '\x0D',
 }
-
-const destination = join(process.cwd(), '.jest-temp')
 
 test('No variables collected without template.json file.', async () => {
   const templateDirectory = await getTemplateDirectory(
@@ -40,8 +42,6 @@ test('No variables collected without template.json file.', async () => {
   const contents = readFileSync(join(destination, 'index.js'), 'utf8')
 
   expect(contents).toEqual(`console.log('test')\n`)
-
-  rimraf.sync(destination)
 })
 
 test('Static variables from template.json are written.', async () => {
@@ -62,8 +62,6 @@ test('Static variables from template.json are written.', async () => {
   const contents = readFileSync(join(destination, 'index.ts'), 'utf8')
 
   expect(contents).toEqual(`console.log('static-variable')\n`)
-
-  rimraf.sync(destination)
 })
 
 test('Dynamic variables from template.json are prompted and written.', async () => {
@@ -96,8 +94,6 @@ test('Dynamic variables from template.json are prompted and written.', async () 
   const contents = readFileSync(join(destination, 'index.ts'), 'utf8')
 
   expect(contents).toEqual(`console.log('first second')\n`)
-
-  rimraf.sync(destination)
 })
 
 test('Nested files are written as well and static, dynamic variables can be combined.', async () => {
@@ -135,8 +131,6 @@ test('Nested files are written as well and static, dynamic variables can be comb
 
   expect(contentsRoot).toEqual(expectedContents)
   expect(contentsNested).toEqual(expectedContents)
-
-  rimraf.sync(destination)
 })
 
 test('Specific files can be excluded from transform.', async () => {
@@ -163,8 +157,6 @@ test('Specific files can be excluded from transform.', async () => {
 
   expect(contents).toEqual(`console.log('name description')\n`)
   expect(contentsExcluded).toEqual(`console.log('<%= keep.this %> name')\n`)
-
-  rimraf.sync(destination)
 })
 
 test('Non text files will stay intact when copied.', async () => {
@@ -194,8 +186,6 @@ test('Non text files will stay intact when copied.', async () => {
   expect(isValidImage('logo-invalid.png')).toBeFalsy()
   expect(isValidImage('nested/logo.png')).toBeTruthy()
   expect(isValidImage('nested/logo-invalid.png')).toBeFalsy()
-
-  rimraf.sync(destination)
 })
 
 test(`Doesn't prompt for variables provided as cli arguments.`, async () => {
@@ -213,8 +203,6 @@ test(`Doesn't prompt for variables provided as cli arguments.`, async () => {
   const contents = readFileSync(join(destination, 'index.ts'), 'utf8')
 
   expect(contents).toEqual(`console.log('test Hello again.')\n`)
-
-  rimraf.sync(destination)
 })
 
 test(`Doesn't prompt for variables provided as object.`, async () => {
@@ -232,6 +220,4 @@ test(`Doesn't prompt for variables provided as object.`, async () => {
   const contents = readFileSync(join(destination, 'index.ts'), 'utf8')
 
   expect(contents).toEqual(`console.log('test Hello again.')\n`)
-
-  rimraf.sync(destination)
 })

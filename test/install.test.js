@@ -1,12 +1,10 @@
-import { existsSync } from 'fs'
+import { existsSync, rmSync } from 'fs'
 import { join } from 'path'
-import rimraf from 'rimraf'
+import { test, expect } from 'vitest'
 import { getTemplateDirectory } from '../utility/template-directory.js'
 import { getConfig } from '../utility/get-config.js'
 import { installDependencies } from '../utility/install-dependencies.js'
 import { writeFiles } from '../utility/write-files.js'
-
-jest.setTimeout(50000)
 
 test('Dependencies are installed if there are any.', async () => {
   const destination = join(process.cwd(), '.jest-temp-dependencies')
@@ -23,7 +21,7 @@ test('Dependencies are installed if there are any.', async () => {
   expect(existsSync(join(destination, 'package-lock.json'))).toBeTruthy()
   expect(existsSync(join(destination, 'node_modules/react'))).toBeTruthy()
 
-  rimraf.sync(destination)
+  rmSync(destination, { recursive: true })
 })
 
 test('Nothing installed if noInstall option is truthy.', async () => {
@@ -41,5 +39,5 @@ test('Nothing installed if noInstall option is truthy.', async () => {
   expect(existsSync(join(destination, 'package-lock.json'))).toBeFalsy()
   expect(existsSync(join(destination, 'node_modules/react'))).toBeFalsy()
 
-  rimraf.sync(destination)
+  rmSync(destination, { recursive: true })
 })

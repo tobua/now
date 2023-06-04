@@ -1,6 +1,5 @@
-import { mkdirSync, lstatSync, existsSync } from 'fs'
+import { mkdirSync, lstatSync, existsSync, rmSync } from 'fs'
 import { join, isAbsolute } from 'path'
-import rimraf from 'rimraf'
 import validate from 'validate-npm-package-name'
 import { log } from './log.js'
 
@@ -34,4 +33,5 @@ export const validatePackageName = (packageName) => {
   return packageName
 }
 
-export const cleanup = (cachePath) => rimraf.sync(cachePath)
+export const cleanup = (cachePath) =>
+  existsSync(cachePath) && rmSync(cachePath, { recursive: true })

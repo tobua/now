@@ -38,10 +38,11 @@ npm init now papua my-app typescript
 
 The following npm packages provide templates to install with `now`.
 
-- [papua](https://github.com/tobua/papua)
-- [padua](https://github.com/tobua/padua)
-- [naven](https://github.com/tobua/naven)
-- [squak](https://github.com/tobua/squak)
+- [papua](https://github.com/tobua/papua) Web development build framework.
+- [padua](https://github.com/tobua/padua) npm plugin development build tool.
+- [naven](https://github.com/tobua/naven) React UI library.
+- [squak](https://github.com/tobua/squak) Node backend framework.
+- [numic](https://github.com/tobua/numic) Managed React Native setup.
 
 ## Convention
 

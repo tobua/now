@@ -1,6 +1,6 @@
-export async function create(
+export declare function create(
   packageName: string,
   destinationPath?: string,
   template?: string,
   variables?: object
-): boolean
+): Promise<boolean>

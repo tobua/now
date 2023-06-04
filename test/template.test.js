@@ -1,12 +1,11 @@
 import { existsSync } from 'fs'
 import { join } from 'path'
 import { stdin } from 'mock-stdin'
+import { test, expect, afterAll, beforeAll, vi } from 'vitest'
 import { cachePath } from '../config.js'
 import { cleanup } from '../utility/helper.js'
 import { downloadTemplate } from '../utility/download-template.js'
 import { getTemplateDirectory } from '../utility/template-directory.js'
-
-jest.setTimeout(30000)
 
 let io = null
 beforeAll(() => {
@@ -74,7 +73,7 @@ test('Recoginizes several templates are available.', async () => {
 })
 
 test('Fails when given template not available.', async () => {
-  const mockProcessExit = jest.spyOn(process, 'exit').mockImplementation(() => {
+  const mockProcessExit = vi.spyOn(process, 'exit').mockImplementation(() => {
     // Throw instead of exit, to stop execution.
     throw new Error('Exit')
   })

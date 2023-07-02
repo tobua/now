@@ -46,3 +46,13 @@ export const promptVariables = async (inputPrompts) => {
 
   return response
 }
+
+export const promptClear = async (directory) => {
+  const response = await prompts({
+    type: 'confirm',
+    name: 'clear',
+    message: `A directory ${directory} already exists, should it be overridden?`
+  })
+
+  return response.clear
+}

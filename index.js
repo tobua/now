@@ -16,7 +16,7 @@ export const create = async (
   variableArguments = null
 ) => {
   validatePackageName(packageName)
-  const destination = getDestinationPath(destinationPath)
+  const destination = await getDestinationPath(destinationPath)
   const cache = cachePath(`${packageName}-${template}`)
 
   cleanup(cache)

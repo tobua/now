@@ -16,7 +16,7 @@
     "ejs": "^3.1.9",
     "find-cache-dir": "^4.0.0",
     "isbinaryfile": "^5.0.0",
-    "logua": "^2.2.0",
+    "logua": "^2.3.0",
     "node-fetch": "^3.3.1",
     "prompts": "^2.4.2",
     "temp-dir": "^3.0.0",
@@ -45,11 +45,11 @@
   ],
   "devDependencies": {
     "is-png": "^3.0.1",
-    "jest-fixture": "^4.0.2",
+    "jest-fixture": "^4.1.0",
     "mock-stdin": "^1.0.0",
-    "padua": "^1.3.0",
+    "padua": "^2.0.0",
     "read-chunk": "^4.0.3",
-    "vitest": "^0.31.4"
+    "vitest": "^0.32.2"
   },
   "prettier": "padua/configuration/.prettierrc.json",
   "eslintConfig": {
@@ -60,6 +60,9 @@
         "ignorePackages"
       ]
     }
+  },
+  "publishConfig": {
+    "provenance": true
   },
   "engines": {
     "node": ">= 16"

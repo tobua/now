@@ -1,9 +1,12 @@
-import { mkdirSync, lstatSync, existsSync, rmSync } from 'fs'
+import { mkdirSync, lstatSync, existsSync, rmSync, readdirSync } from 'fs'
 import { join, isAbsolute } from 'path'
 import validate from 'validate-npm-package-name'
 import { log } from './log.js'
+import { promptClear } from './prompt.js'
 
-export const getDestinationPath = (input = process.cwd()) => {
+const isDirectoryEmpty = (directory) => readdirSync(directory).length === 0
+
+export const getDestinationPath = async (input = process.cwd(), skipClear = false) => {
   let destinationPath = process.cwd()
 
   if (input && !isAbsolute(input)) {
@@ -16,6 +19,17 @@ export const getDestinationPath = (input = process.cwd()) => {
     mkdirSync(destinationPath, { recursive: true })
   } else if (!lstatSync(destinationPath).isDirectory()) {
     log(`Destination ${destinationPath} must be a directory`, 'error')
+  } else if (!skipClear && !isDirectoryEmpty(destinationPath)) {
+    const clear = await promptClear(destinationPath)
+
+    if (!clear) {
+      log('Exiting, directory already exists', 'error')
+    } else {
+      // Clear directory to ensure proper npm install.
+      rmSync(destinationPath, { recursive: true })
+      // Directory itself is needed.
+      mkdirSync(destinationPath, { recursive: true })
+    }
   }
 
   return destinationPath

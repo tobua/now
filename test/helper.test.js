@@ -1,7 +1,21 @@
-import { existsSync, rmSync } from 'fs'
+import { existsSync, rmSync, readdirSync } from 'fs'
 import { join } from 'path'
-import { test, expect, vi } from 'vitest'
+import { stdin } from 'mock-stdin'
+import { test, expect, beforeAll, afterAll, vi } from 'vitest'
+import { writeFile } from 'jest-fixture'
 import { getDestinationPath, validatePackageName } from '../utility/helper.js'
+
+let io = null
+beforeAll(() => {
+  io = stdin()
+})
+afterAll(() => io.restore())
+
+const keys = {
+  enter: '\x0D',
+}
+
+const mockExit = vi.spyOn(process, 'exit').mockImplementation(() => {})
 
 test('Validates package name correctly.', () => {
   vi.spyOn(process, 'exit').mockImplementation(() => {
@@ -19,20 +33,20 @@ test('Validates package name correctly.', () => {
   expect(() => validatePackageName('test/hello')).toThrow()
 })
 
-test('Returns correct destination paths.', () => {
+test('Returns correct destination paths.', async () => {
   const cwd = process.cwd()
 
   // Place contents inside current location.
-  expect(getDestinationPath()).toEqual(cwd)
+  expect(await getDestinationPath(undefined, true)).toEqual(cwd)
   // Use current folder.
-  expect(getDestinationPath('.')).toEqual(cwd)
+  expect(await getDestinationPath('.', true)).toEqual(cwd)
   // Use and create directory.
   expect(existsSync(join(cwd, 'somewhere'))).toBeFalsy()
-  expect(getDestinationPath('somewhere')).toEqual(join(cwd, 'somewhere'))
+  expect(await getDestinationPath('somewhere', true)).toEqual(join(cwd, 'somewhere'))
   expect(existsSync(join(cwd, 'somewhere'))).toBeTruthy()
   // Use and create nested directories.
   expect(existsSync(join(cwd, 'some/where'))).toBeFalsy()
-  expect(getDestinationPath('some/where')).toEqual(join(cwd, 'some/where'))
+  expect(await getDestinationPath('some/where', true)).toEqual(join(cwd, 'some/where'))
   expect(existsSync(join(cwd, 'some/where'))).toBeTruthy()
 
   // Clean up created directories.
@@ -43,4 +57,39 @@ test('Returns correct destination paths.', () => {
   expect(existsSync(join(cwd, 'somewhere'))).toBeFalsy()
   expect(existsSync(join(cwd, 'some/where'))).toBeFalsy()
   expect(existsSync(join(cwd, 'some'))).toBeFalsy()
+})
+
+test('Clears non-empty destination path on confirmed prompt.', async () => {
+  const cwd = join(process.cwd(), 'test/fixture/helper')
+
+  if (existsSync(join(cwd, 'non-empty'))) {
+    rmSync(join(cwd, 'non-empty'), { recursive: true })
+  }
+
+  // Create a directory.
+  expect(await getDestinationPath('test/fixture/helper/non-empty')).toEqual(join(cwd, 'non-empty'))
+  // No prompt for empty directory.
+  expect(await getDestinationPath('test/fixture/helper/non-empty')).toEqual(join(cwd, 'non-empty'))
+
+  // Add file as contents.
+  expect(readdirSync(join(cwd, 'non-empty')).length === 0).toBeTruthy()
+  writeFile('test/fixture/helper/non-empty/index.js', 'console.log("hello")')
+  expect(readdirSync(join(cwd, 'non-empty')).length === 0).toBeFalsy()
+  expect(mockExit.mock.calls.length).toBe(0)
+
+  // Mock confirm.
+  const sendKeystrokes = async () => {
+    io.send('y')
+    io.send(keys.enter)
+  }
+
+  setTimeout(() => sendKeystrokes().then(), 5)
+
+  expect(await getDestinationPath('test/fixture/helper/non-empty')).toEqual(join(cwd, 'non-empty'))
+  expect(existsSync(join(cwd, 'non-empty'))).toBeTruthy()
+  // Directory was cleared.
+  expect(readdirSync(join(cwd, 'non-empty')).length === 0).toBeTruthy()
+
+  // Clean up created directories.
+  rmSync(join(cwd, 'non-empty'), { recursive: true })
 })

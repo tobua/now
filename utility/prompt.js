@@ -51,7 +51,7 @@ export const promptClear = async (directory) => {
   const response = await prompts({
     type: 'confirm',
     name: 'clear',
-    message: `A directory ${directory} already exists, should it be overridden?`
+    message: `A directory ${directory} already exists, should it be emptied first?`,
   })
 
   return response.clear

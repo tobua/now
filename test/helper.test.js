@@ -1,4 +1,4 @@
-import { existsSync, rmSync, readdirSync } from 'fs'
+import { existsSync, rmSync, readdirSync, mkdirSync } from 'fs'
 import { join } from 'path'
 import { stdin } from 'mock-stdin'
 import { test, expect, beforeAll, afterAll, vi } from 'vitest'
@@ -85,11 +85,51 @@ test('Clears non-empty destination path on confirmed prompt.', async () => {
 
   setTimeout(() => sendKeystrokes().then(), 5)
 
-  expect(await getDestinationPath('test/fixture/helper/non-empty')).toEqual(join(cwd, 'non-empty'))
+  expect(await getDestinationPath('test/fixture/helper/non-empty')).toEqual(join(cwd, 'non-empty')) // Actual prompt.
   expect(existsSync(join(cwd, 'non-empty'))).toBeTruthy()
   // Directory was cleared.
   expect(readdirSync(join(cwd, 'non-empty')).length === 0).toBeTruthy()
 
   // Clean up created directories.
   rmSync(join(cwd, 'non-empty'), { recursive: true })
+})
+
+test('Existing git repository is kept when overriding a folder.', async () => {
+  // Restore as otherwise previous test causes issues.
+  io.restore()
+  io = stdin()
+
+  const cwd = join(process.cwd(), 'test/fixture/helper')
+
+  if (existsSync(join(cwd, 'non-empty-git'))) {
+    rmSync(join(cwd, 'non-empty-git'), { recursive: true })
+  }
+
+  mkdirSync(join(cwd, 'non-empty-git'))
+
+  // Add file as contents.
+  expect(readdirSync(join(cwd, 'non-empty-git')).length === 0).toBeTruthy()
+  writeFile('test/fixture/helper/non-empty-git/index.js', 'console.log("hello")')
+  writeFile('test/fixture/helper/non-empty-git/.git/.gitkeep', 'console.log("hello")')
+  expect(readdirSync(join(cwd, 'non-empty-git')).length === 2).toBeTruthy()
+  expect(mockExit.mock.calls.length).toBe(0)
+
+  // Mock confirm.
+  const sendKeystrokes = async () => {
+    io.send('n')
+    io.send(keys.enter)
+  }
+
+  setTimeout(() => sendKeystrokes().then(), 5)
+
+  expect(await getDestinationPath('test/fixture/helper/non-empty-git')).toEqual(
+    join(cwd, 'non-empty-git'),
+  ) // Actual prompt.
+
+  expect(existsSync(join(cwd, 'non-empty-git'))).toBeTruthy()
+  // Directory was cleared.
+  expect(readdirSync(join(cwd, 'non-empty-git')).length).toBe(2)
+
+  // Clean up created directories.
+  rmSync(join(cwd, 'non-empty-git'), { recursive: true })
 })

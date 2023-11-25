@@ -23,7 +23,7 @@ export const getDestinationPath = async (input = process.cwd(), skipClear = fals
     const clear = await promptClear(destinationPath)
 
     if (!clear) {
-      log('Exiting, directory already exists', 'error')
+      log('Keeping existing contents, might be overriden when copying the template')
     } else {
       // Clear directory to ensure proper npm install.
       rmSync(destinationPath, { recursive: true })

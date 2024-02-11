@@ -39,7 +39,7 @@ test('Locates template in main directory.', async () => {
   let templatePath = await getTemplateDirectory(
     undefined,
     undefined,
-    join(process.cwd(), 'test/fixture/basic')
+    join(process.cwd(), 'test/fixture/basic'),
   )
 
   expect(templatePath).toEqual(join(process.cwd(), 'test/fixture/basic'))
@@ -48,7 +48,7 @@ test('Locates template in main directory.', async () => {
   templatePath = await getTemplateDirectory(
     'default',
     undefined,
-    join(process.cwd(), 'test/fixture/basic')
+    join(process.cwd(), 'test/fixture/basic'),
   )
 
   expect(templatePath).toEqual(join(process.cwd(), 'test/fixture/basic'))
@@ -66,7 +66,7 @@ test('Recoginizes several templates are available.', async () => {
   const templatePath = await getTemplateDirectory(
     undefined,
     undefined,
-    join(process.cwd(), 'test/fixture/nested')
+    join(process.cwd(), 'test/fixture/nested'),
   )
 
   expect(templatePath).toEqual(join(process.cwd(), 'test/fixture/nested/second'))
@@ -79,7 +79,7 @@ test('Fails when given template not available.', async () => {
   })
 
   expect(
-    getTemplateDirectory('fourth', undefined, join(process.cwd(), 'test/fixture/nested'))
+    getTemplateDirectory('fourth', undefined, join(process.cwd(), 'test/fixture/nested')),
   ).rejects.toEqual(new Error('Exit'))
 
   expect(mockProcessExit).toHaveBeenCalledWith(0)
@@ -89,7 +89,7 @@ test('Automatically selects first template if only one is available.', async () 
   const templatePath = await getTemplateDirectory(
     undefined,
     undefined,
-    join(process.cwd(), 'test/fixture/single')
+    join(process.cwd(), 'test/fixture/single'),
   )
 
   expect(templatePath).toEqual(join(process.cwd(), 'test/fixture/single/first'))
@@ -99,7 +99,7 @@ test('Automatically selects default template if no selection provided.', async (
   const templatePath = await getTemplateDirectory(
     undefined,
     undefined,
-    join(process.cwd(), 'test/fixture/default')
+    join(process.cwd(), 'test/fixture/default'),
   )
   expect(templatePath).toEqual(join(process.cwd(), 'test/fixture/default/default'))
 })

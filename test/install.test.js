@@ -11,7 +11,7 @@ test('Dependencies are installed if there are any.', async () => {
   const templateDirectory = await getTemplateDirectory(
     undefined,
     undefined,
-    join(process.cwd(), 'test/fixture/dependencies')
+    join(process.cwd(), 'test/fixture/dependencies'),
   )
   const config = getConfig(templateDirectory)
   writeFiles(destination, {}, templateDirectory)
@@ -29,7 +29,7 @@ test('Nothing installed if noInstall option is truthy.', async () => {
   const templateDirectory = await getTemplateDirectory(
     undefined,
     undefined,
-    join(process.cwd(), 'test/fixture/no-install')
+    join(process.cwd(), 'test/fixture/no-install'),
   )
   const config = getConfig(templateDirectory)
   writeFiles(destination, {}, templateDirectory)

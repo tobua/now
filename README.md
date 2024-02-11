@@ -14,6 +14,8 @@ Install template for compatible packages like this:
 npm init --yes now papua
 # or the same thing with npx
 npx --yes create-now papua
+# using Bun
+bun create now papua
 ```
 
 `--yes` avoids the prompt by `npm` to install this package.

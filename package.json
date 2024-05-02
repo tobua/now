@@ -17,6 +17,7 @@
     "isbinaryfile": "^5.0.2",
     "logua": "^3.0.3",
     "prompts": "^2.4.2",
+    "strip-dirs": "^3.0.0",
     "temp-dir": "^3.0.0",
     "validate-npm-package-name": "^5.0.0"
   },
@@ -33,12 +34,12 @@
     "typescript": "^5.4.5",
     "zero-configuration": "^0.7.0"
   },
-  "overrides": {
-    "strip-dirs": ">= 3"
-  },
   "trustedDependencies": [
     "zero-configuration"
   ],
+  "overrides": {
+    "strip-dirs": ">= 3"
+  },
   "type": "module",
   "sideEffects": true,
   "main": "./index.ts",

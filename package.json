@@ -37,9 +37,6 @@
   "trustedDependencies": [
     "zero-configuration"
   ],
-  "overrides": {
-    "strip-dirs": ">= 3"
-  },
   "type": "module",
   "sideEffects": true,
   "main": "./index.ts",

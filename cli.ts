@@ -1,14 +1,14 @@
-#!/usr/bin/env node
-import { getDestinationPath, validatePackageName, cleanup } from './utility/helper.js'
-import { loadPackage } from './utility/load-package.js'
-import { downloadTemplate } from './utility/download-template.js'
-import { getTemplateDirectory } from './utility/template-directory.js'
-import { collectVariables } from './utility/collect-variables.js'
-import { writeFiles } from './utility/write-files.js'
-import { installDependencies } from './utility/install-dependencies.js'
-import { getConfig } from './utility/get-config.js'
-import { log } from './utility/log.js'
-import { cachePath } from './config.js'
+#!/usr/bin/env bun
+import { cachePath } from './config'
+import { collectVariables } from './utility/collect-variables'
+import { downloadTemplate } from './utility/download-template'
+import { getConfig } from './utility/get-config'
+import { cleanup, getDestinationPath, validatePackageName } from './utility/helper'
+import { installDependencies } from './utility/install-dependencies'
+import { loadPackage } from './utility/load-package'
+import { log } from './utility/log'
+import { getTemplateDirectory } from './utility/template-directory'
+import { writeFiles } from './utility/write-files'
 
 // Remove additional parameter when used with flag like --yes in older node versions.
 if (process.argv[2] === 'now') {
@@ -23,7 +23,7 @@ const cache = cachePath(`${packageName}-${template}`)
 
 cleanup(cache)
 
-const url = await loadPackage(packageName)
+const url = await loadPackage(packageName as string)
 await downloadTemplate(url, cache)
 const templateDirectory = await getTemplateDirectory(template, cache)
 const config = getConfig(templateDirectory)

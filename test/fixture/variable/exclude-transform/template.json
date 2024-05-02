@@ -1,7 +1,7 @@
 {
-  "variables": {
-    "name": "name",
-    "description": "description"
-  },
-  "excludeTransform": ["excluded.ts"]
+	"variables": {
+		"name": "name",
+		"description": "description"
+	},
+	"excludeTransform": ["excluded.ts"]
 }

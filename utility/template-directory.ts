@@ -1,12 +1,12 @@
-import { existsSync, readdirSync } from 'fs'
-import { join } from 'path'
-import { promptDirectories } from './prompt.js'
-import { log } from './log.js'
+import { existsSync, readdirSync } from 'node:fs'
+import { join } from 'node:path'
+import { log } from './log'
+import { promptDirectories } from './prompt'
 
 // singleTemplate: is there only one template available.
 // directories: all the available templates.
 // template: optional template the user has already selected.
-const selectDirectory = async (singleTemplate, directories, template) => {
+const selectDirectory = (singleTemplate: boolean, directories: string[], template: string) => {
   if (singleTemplate) {
     return '.'
   }
@@ -38,7 +38,7 @@ const selectDirectory = async (singleTemplate, directories, template) => {
   return promptDirectories(directories)
 }
 
-export const getTemplateDirectory = async (template, cachePath, pathOverride) => {
+export const getTemplateDirectory = async (template = '', cachePath = '', pathOverride?: string) => {
   const templatesPath = pathOverride || join(cachePath, 'template')
 
   if (!existsSync(templatesPath)) {

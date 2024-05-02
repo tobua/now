@@ -1,7 +1,8 @@
 import prompts from 'prompts'
-import { log } from './log.js'
+import type { Config } from '../types'
+import { log } from './log'
 
-export const promptDirectories = async (directories) => {
+export const promptDirectories = async (directories: string[]) => {
   const response = await prompts({
     type: 'select',
     name: 'directory',
@@ -15,12 +16,11 @@ export const promptDirectories = async (directories) => {
   return response.directory
 }
 
-export const promptVariables = async (inputPrompts) => {
+export const promptVariables = async (inputPrompts: Config['prompts'] = []) => {
   let valid = true
 
-  inputPrompts.forEach((prompt) => {
+  for (const prompt of inputPrompts) {
     if (!prompt.type) {
-      // eslint-disable-next-line no-param-reassign
       prompt.type = 'text'
     }
 
@@ -30,10 +30,9 @@ export const promptVariables = async (inputPrompts) => {
     }
 
     if (!prompt.message) {
-      // eslint-disable-next-line no-param-reassign
       prompt.message = `Value for "${prompt.name}"?`
     }
-  })
+  }
 
   if (!valid) {
     return false
@@ -41,13 +40,13 @@ export const promptVariables = async (inputPrompts) => {
 
   const response = await prompts(inputPrompts)
 
-  // eslint-disable-next-line no-console
+  // biome-ignore lint/suspicious/noConsoleLog: Used to add a single line.
   console.log('')
 
   return response
 }
 
-export const promptClear = async (directory) => {
+export const promptClear = async (directory: string) => {
   const response = await prompts({
     type: 'confirm',
     name: 'clear',

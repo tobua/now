@@ -1,13 +1,13 @@
 {
-  "variables": {
-    "version": "1.0.0"
-  },
-  "prompts": [
-    {
-      "name": "name"
-    },
-    {
-      "name": "description"
-    }
-  ]
+	"variables": {
+		"version": "1.0.0"
+	},
+	"prompts": [
+		{
+			"name": "name"
+		},
+		{
+			"name": "description"
+		}
+	]
 }

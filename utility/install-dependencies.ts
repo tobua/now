@@ -1,16 +1,17 @@
-import { existsSync, readFileSync } from 'fs'
-import { join } from 'path'
-import { execSync } from 'child_process'
-import { log } from './log.js'
+import { execSync } from 'node:child_process'
+import { existsSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import type { Config } from '../types'
+import { log } from './log'
 
-export const installDependencies = (config, destination) => {
+export const installDependencies = (config: Config, destination: string) => {
   if (config.noInstall) {
     return
   }
 
   const packageJsonPath = join(destination, 'package.json')
 
-  let packageContents = {}
+  let packageContents: { dependencies?: { [key: string]: string }; devDependencies?: { [key: string]: string } } = {}
 
   try {
     if (existsSync(packageJsonPath)) {
@@ -23,7 +24,7 @@ export const installDependencies = (config, destination) => {
   // Install only required if there are dependencies.
   const { dependencies, devDependencies } = packageContents
 
-  if (!dependencies && !devDependencies) {
+  if (!(dependencies || devDependencies)) {
     return
   }
 
@@ -43,11 +44,7 @@ export const installDependencies = (config, destination) => {
 
   log('installing dependencies')
 
-  if (typeof Bun !== 'undefined') {
-    execSync('bun install', { stdio: 'inherit', cwd: destination })
-  } else {
-    execSync('npm install', { stdio: 'inherit', cwd: destination })
-  }
+  execSync('bun install', { stdio: 'inherit', cwd: destination })
 
   log('dependencies installed')
 }

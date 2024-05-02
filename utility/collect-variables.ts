@@ -1,12 +1,13 @@
-import { promptVariables } from './prompt.js'
+import type { Config } from '../types'
+import { promptVariables } from './prompt'
 
-const removePropertyFromPrompts = (config, property) => {
+const removePropertyFromPrompts = (config: Config, property: string) => {
   if (config.prompts && Array.isArray(config.prompts)) {
     config.prompts = config.prompts.filter((prompt) => prompt.name !== property)
   }
 }
 
-export const collectVariables = async (config, variableArguments) => {
+export const collectVariables = async (config: Config, variableArguments?: object) => {
   const variables = {}
 
   if (config.variables) {
@@ -14,16 +15,17 @@ export const collectVariables = async (config, variableArguments) => {
   }
 
   if (Array.isArray(variableArguments)) {
-    variableArguments.forEach((variableArgument) => {
+    for (const variableArgument of variableArguments) {
       const [property, value] = variableArgument.split('=')
+      // @ts-ignore
       variables[property] = value
       removePropertyFromPrompts(config, property)
-    })
+    }
   } else if (variableArguments && typeof variableArguments === 'object') {
     Object.assign(variables, variableArguments)
-    Object.keys(variableArguments).forEach((property) =>
+    for (const property of Object.keys(variableArguments)) {
       removePropertyFromPrompts(config, property)
-    )
+    }
   }
 
   if (config.prompts && config.prompts.length > 0) {

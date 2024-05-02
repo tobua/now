@@ -1,5 +1,5 @@
 {
-  "variables": {
-    "name": "static-variable"
-  }
+	"variables": {
+		"name": "static-variable"
+	}
 }

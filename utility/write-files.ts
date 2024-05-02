@@ -1,34 +1,30 @@
-import { readdirSync, writeFileSync, existsSync, mkdirSync, copyFileSync } from 'fs'
-import { join } from 'path'
+import { copyFileSync, existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs'
+import { join } from 'node:path'
 import ejs from 'ejs'
 import { isBinaryFileSync } from 'isbinaryfile'
-import { log } from './log.js'
+import type { Config } from '../types'
+import { log } from './log'
 
 const writeDirectoryFiles = (
-  directory,
-  variables,
-  destinationPath,
+  directory: string,
+  variables: Config['variables'],
+  destinationPath: string,
   relativePath = '.',
-  config = {}
+  config: Config = {},
 ) => {
-  readdirSync(directory, { withFileTypes: true }).forEach((path) => {
-    const ejsOptions = {}
+  const directoryEntries = readdirSync(directory, { withFileTypes: true })
+  for (const path of directoryEntries) {
+    const ejsOptions: ejs.Options = {}
 
     if (path.isDirectory()) {
       // Recursively check subfolders.
-      writeDirectoryFiles(
-        join(directory, path.name),
-        variables,
-        destinationPath,
-        join(relativePath, path.name),
-        config
-      )
-      return
+      writeDirectoryFiles(join(directory, path.name), variables, destinationPath, join(relativePath, path.name), config)
+      continue
     }
 
     // Skip config file.
     if (path.name === 'template.json') {
-      return
+      continue
     }
 
     if ((config.excludeTransform || []).includes(path.name)) {
@@ -44,20 +40,20 @@ const writeDirectoryFiles = (
     // Do not add variables to binary files like images.
     if (isBinaryFileSync(join(directory, path.name))) {
       copyFileSync(join(directory, path.name), join(currentDestinationPath, path.name))
-      return
+      continue
     }
 
-    ejs.renderFile(join(directory, path.name), variables, ejsOptions, (error, result) => {
+    ejs.renderFile(join(directory, path.name), variables ?? {}, ejsOptions, (error, result) => {
       if (error) {
         log(`Error rendering template for ${path.name}`, 'error')
       }
 
       writeFileSync(join(currentDestinationPath, path.name), result)
     })
-  })
+  }
 }
 
-export const writeFiles = (destinationPath, variables, templateDirectory, config) => {
+export const writeFiles = (destinationPath: string, variables: Config['variables'], templateDirectory: string, config?: Config) => {
   // Ensure destination directory exists.
   if (!existsSync(destinationPath)) {
     mkdirSync(destinationPath)

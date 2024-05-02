@@ -11,19 +11,14 @@ Create projects from templates.
 Install template for compatible packages like this:
 
 ```sh
-npm init --yes now papua
-# or the same thing with npx
-npx --yes create-now papua
-# using Bun
 bun create now papua
+bunx create-now papua
 ```
-
-`--yes` avoids the prompt by `npm` to install this package.
 
 ## Options
 
 ```sh
-npm init now npm-package-name [destination] [template] [variable-values]
+bun create now npm-package-name [destination] [template] [variable-values]
 ```
 
 The second argument can be used to describe the location where to place the project while the third describes the template to use. Both parameters are optional. If no location is provided the current directory will be used. If there is more than one template available for the package, but no template selected then a prompt will appear.
@@ -33,19 +28,20 @@ The second argument can be used to describe the location where to place the proj
 Use the papua build tool with the `website` template and place result in `/my-site` folder.
 
 ```sh
-npm init now papua my-site website
+bun create now papua my-site website
 ```
 
 Create a React Native app managed with numic inside the `/my-app` folder avoiding the prompt for a bundle name by presetting the variable.
 
 ```sh
-npm init now numic my-app default name=tesla
+bun create now numic my-app default name=tesla
 ```
 
 ## Templates
 
 The following npm packages provide templates to install with `now`.
 
+- [zero-configuration](https://github.com/tobua/zero-configuration) Various web development setups.
 - [papua](https://github.com/tobua/papua) Web development build framework.
 - [padua](https://github.com/tobua/padua) npm plugin development build tool.
 - [naven](https://github.com/tobua/naven) React UI library.
@@ -115,7 +111,7 @@ The variable contents need to be defined in a `template.json` file at the top of
 To avoid the prompt the variables can also be supplied as arguments:
 
 ```
-npm init --yes now padua ./my-plugin typescript name=my-plugin description="What it does."
+bun create now padua ./my-plugin typescript name=my-plugin description="What it does."
 ```
 
 ### Options
@@ -135,7 +131,7 @@ In the optional `template.json` file you can add further options to configure th
 
 `excludeTransform` [none] template variables like `<% whatever %>` will be ignored, only one's with `<# here #>` will be replaced.
 
-## node Usage
+## Programmatic Usage
 
 ```js
 import { create } from 'create-now'

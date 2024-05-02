@@ -1,15 +1,15 @@
-import { existsSync, readFileSync, rmSync } from 'fs'
-import { join } from 'path'
-import { stdin } from 'mock-stdin'
-import { readChunkSync } from 'read-chunk'
+import { afterAll, afterEach, beforeAll, expect, test } from 'bun:test'
+import { existsSync, readFileSync, rmSync } from 'node:fs'
+import { join } from 'node:path'
 import isPng from 'is-png'
-import { test, expect, afterAll, beforeAll, afterEach } from 'vitest'
-import { getTemplateDirectory } from '../utility/template-directory.js'
-import { getConfig } from '../utility/get-config.js'
-import { collectVariables } from '../utility/collect-variables.js'
-import { writeFiles } from '../utility/write-files.js'
+import { type MockSTDIN, stdin } from 'mock-stdin'
+import { readChunkSync } from 'read-chunk'
+import { collectVariables } from '../utility/collect-variables'
+import { getConfig } from '../utility/get-config'
+import { getTemplateDirectory } from '../utility/template-directory'
+import { writeFiles } from '../utility/write-files'
 
-let io = null
+let io: MockSTDIN
 beforeAll(() => {
   io = stdin()
 })
@@ -27,11 +27,7 @@ const keys = {
 }
 
 test('No variables collected without template.json file.', async () => {
-  const templateDirectory = await getTemplateDirectory(
-    undefined,
-    undefined,
-    join(process.cwd(), 'test/fixture/basic')
-  )
+  const templateDirectory = await getTemplateDirectory(undefined, undefined, join(process.cwd(), 'test/fixture/basic'))
   const config = getConfig(templateDirectory)
   const variables = await collectVariables(config)
   writeFiles(destination, variables, templateDirectory)
@@ -45,11 +41,7 @@ test('No variables collected without template.json file.', async () => {
 })
 
 test('Static variables from template.json are written.', async () => {
-  const templateDirectory = await getTemplateDirectory(
-    'static',
-    undefined,
-    join(process.cwd(), 'test/fixture/variable')
-  )
+  const templateDirectory = await getTemplateDirectory('static', undefined, join(process.cwd(), 'test/fixture/variable'))
   const config = getConfig(templateDirectory)
   const variables = await collectVariables(config)
   writeFiles(destination, variables, templateDirectory)
@@ -79,11 +71,7 @@ test('Dynamic variables from template.json are prompted and written.', async () 
   setTimeout(() => sendKeystrokesFirstVariable().then(), 5)
   setTimeout(() => sendKeystrokesSecondVariable().then(), 10)
 
-  const templateDirectory = await getTemplateDirectory(
-    'dynamic',
-    undefined,
-    join(process.cwd(), 'test/fixture/variable')
-  )
+  const templateDirectory = await getTemplateDirectory('dynamic', undefined, join(process.cwd(), 'test/fixture/variable'))
   const config = getConfig(templateDirectory)
   const variables = await collectVariables(config)
   writeFiles(destination, variables, templateDirectory)
@@ -111,11 +99,7 @@ test('Nested files are written as well and static, dynamic variables can be comb
   setTimeout(() => sendKeystrokesFirstVariable().then(), 5)
   setTimeout(() => sendKeystrokesSecondVariable().then(), 10)
 
-  const templateDirectory = await getTemplateDirectory(
-    'nested',
-    undefined,
-    join(process.cwd(), 'test/fixture/variable')
-  )
+  const templateDirectory = await getTemplateDirectory('nested', undefined, join(process.cwd(), 'test/fixture/variable'))
   const config = getConfig(templateDirectory)
   const variables = await collectVariables(config)
   writeFiles(destination, variables, templateDirectory)
@@ -134,11 +118,7 @@ test('Nested files are written as well and static, dynamic variables can be comb
 })
 
 test('Specific files can be excluded from transform.', async () => {
-  const templateDirectory = await getTemplateDirectory(
-    'exclude-transform',
-    undefined,
-    join(process.cwd(), 'test/fixture/variable')
-  )
+  const templateDirectory = await getTemplateDirectory('exclude-transform', undefined, join(process.cwd(), 'test/fixture/variable'))
   const config = getConfig(templateDirectory)
 
   expect(config.excludeTransform).toEqual(['excluded.ts'])
@@ -160,11 +140,7 @@ test('Specific files can be excluded from transform.', async () => {
 })
 
 test('Non text files will stay intact when copied.', async () => {
-  const templateDirectory = await getTemplateDirectory(
-    'image',
-    undefined,
-    join(process.cwd(), 'test/fixture/variable')
-  )
+  const templateDirectory = await getTemplateDirectory('image', undefined, join(process.cwd(), 'test/fixture/variable'))
   writeFiles(destination, {}, templateDirectory, {})
 
   expect(existsSync(join(destination, 'index.ts'))).toBeTruthy()
@@ -179,7 +155,7 @@ test('Non text files will stay intact when copied.', async () => {
       readChunkSync(join(destination, fileName), {
         length: 8,
         startPosition: 0,
-      })
+      }),
     )
 
   expect(isValidImage('logo.png')).toBeTruthy()
@@ -189,11 +165,7 @@ test('Non text files will stay intact when copied.', async () => {
 })
 
 test(`Doesn't prompt for variables provided as cli arguments.`, async () => {
-  const templateDirectory = await getTemplateDirectory(
-    'dynamic',
-    undefined,
-    join(process.cwd(), 'test/fixture/variable')
-  )
+  const templateDirectory = await getTemplateDirectory('dynamic', undefined, join(process.cwd(), 'test/fixture/variable'))
   const config = getConfig(templateDirectory)
   const variables = await collectVariables(config, ['name=test', 'description=Hello again.'])
   writeFiles(destination, variables, templateDirectory)
@@ -206,11 +178,7 @@ test(`Doesn't prompt for variables provided as cli arguments.`, async () => {
 })
 
 test(`Doesn't prompt for variables provided as object.`, async () => {
-  const templateDirectory = await getTemplateDirectory(
-    'dynamic',
-    undefined,
-    join(process.cwd(), 'test/fixture/variable')
-  )
+  const templateDirectory = await getTemplateDirectory('dynamic', undefined, join(process.cwd(), 'test/fixture/variable'))
   const config = getConfig(templateDirectory)
   const variables = await collectVariables(config, { name: 'test', description: 'Hello again.' })
   writeFiles(destination, variables, templateDirectory)

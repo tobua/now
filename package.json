@@ -6,47 +6,51 @@
   "license": "MIT",
   "author": "Matthias Giger",
   "scripts": {
-    "test": "vitest run"
-  },
-  "padua": {
-    "source": true
+    "format": "biome format . --write",
+    "lint": "biome lint .",
+    "types": "tsc"
   },
   "dependencies": {
     "download-git-repo": "^3.0.2",
-    "ejs": "^3.1.9",
+    "ejs": "^3.1.10",
     "find-cache-dir": "^5.0.0",
-    "isbinaryfile": "^5.0.0",
+    "isbinaryfile": "^5.0.2",
     "logua": "^3.0.3",
-    "node-fetch": "^3.3.2",
     "prompts": "^2.4.2",
     "temp-dir": "^3.0.0",
     "validate-npm-package-name": "^5.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.7.2",
+    "@types/bun": "^1.1.1",
+    "@types/ejs": "^3.1.5",
+    "@types/prompts": "^2.4.9",
+    "@types/validate-npm-package-name": "^4.0.2",
     "is-png": "^3.0.1",
     "jest-fixture": "^4.1.0",
     "mock-stdin": "^1.0.0",
-    "vitest": "^0.34.6",
-    "padua": "^2.0.9",
-    "read-chunk": "^4.0.3"
+    "read-chunk": "^4.0.3",
+    "typescript": "^5.4.5",
+    "zero-configuration": "^0.7.0"
   },
+  "overrides": {
+    "strip-dirs": ">= 3"
+  },
+  "trustedDependencies": [
+    "zero-configuration"
+  ],
   "type": "module",
   "sideEffects": true,
-  "main": "./index.js",
+  "main": "./index.ts",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "default": "./index.js"
+      "default": "./index.ts"
     }
   },
-  "bin": "./cli.js",
-  "source": "./index.js",
-  "types": "./index.d.ts",
+  "bin": "./cli.ts",
   "files": [
     "utility",
-    "*.js",
-    "*.d.ts",
-    "!test"
+    "*.ts"
   ],
   "keywords": [
     "template",
@@ -54,20 +58,25 @@
     "generator",
     "init"
   ],
-  "prettier": "padua/configuration/.prettierrc.json",
-  "eslintConfig": {
-    "extends": "./node_modules/padua/configuration/eslint.cjs",
-    "rules": {
-      "import/extensions": [
-        2,
-        "ignorePackages"
-      ]
-    }
-  },
   "publishConfig": {
     "provenance": true
   },
-  "engines": {
-    "node": ">= 18"
+  "configuration": {
+    "gitignore": [
+      "node_modules",
+      "bun.lockb",
+      "test/download",
+      ".create-now-temporary"
+    ],
+    "license": "MIT",
+    "biome": "recommended",
+    "vscode": "biome",
+    "typescript": {
+      "extends": "plugin",
+      "files": [
+        "index.ts",
+        "cli.ts"
+      ]
+    }
   }
 }

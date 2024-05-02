@@ -1,11 +1,11 @@
-import { existsSync, rmSync, readdirSync, mkdirSync } from 'fs'
-import { join } from 'path'
-import { stdin } from 'mock-stdin'
-import { test, expect, beforeAll, afterAll, vi } from 'vitest'
+import { afterAll, beforeAll, expect, spyOn, test } from 'bun:test'
+import { existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs'
+import { join } from 'node:path'
 import { writeFile } from 'jest-fixture'
-import { getDestinationPath, validatePackageName } from '../utility/helper.js'
+import { type MockSTDIN, stdin } from 'mock-stdin'
+import { getDestinationPath, validatePackageName } from '../utility/helper'
 
-let io = null
+let io: MockSTDIN
 beforeAll(() => {
   io = stdin()
 })
@@ -15,22 +15,26 @@ const keys = {
   enter: '\x0D',
 }
 
-const mockExit = vi.spyOn(process, 'exit').mockImplementation(() => {})
+// @ts-ignore
+const mockExit = spyOn(process, 'exit').mockImplementation(() => undefined)
 
 test('Validates package name correctly.', () => {
-  vi.spyOn(process, 'exit').mockImplementation(() => {
+  spyOn(process, 'exit').mockImplementation(() => {
     // Throw instead of exit, to stop execution.
     throw new Error('Exit')
   })
 
   expect(() => validatePackageName('padua')).not.toThrow()
   // Not strings
+  // @ts-expect-error
   expect(() => validatePackageName(5)).toThrow()
   expect(() => validatePackageName()).toThrow()
   // Valid, can be URL encoded.
   expect(() => validatePackageName('test-hello')).not.toThrow()
   // Invalid.
   expect(() => validatePackageName('test/hello')).toThrow()
+
+  mockExit.mockRestore()
 })
 
 test('Returns correct destination paths.', async () => {
@@ -122,9 +126,7 @@ test('Existing git repository is kept when overriding a folder.', async () => {
 
   setTimeout(() => sendKeystrokes().then(), 5)
 
-  expect(await getDestinationPath('test/fixture/helper/non-empty-git')).toEqual(
-    join(cwd, 'non-empty-git'),
-  ) // Actual prompt.
+  expect(await getDestinationPath('test/fixture/helper/non-empty-git')).toEqual(join(cwd, 'non-empty-git')) // Actual prompt.
 
   expect(existsSync(join(cwd, 'non-empty-git'))).toBeTruthy()
   // Directory was cleared.

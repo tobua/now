@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { writeFile } from 'jest-fixture'
 import { type MockSTDIN, stdin } from 'mock-stdin'
-import { getDestinationPath, validatePackageName } from '../utility/helper'
+import { getDestinationPath, validatePackageName } from '../helper'
 
 let io: MockSTDIN
 beforeAll(() => {
@@ -82,12 +82,12 @@ test('Clears non-empty destination path on confirmed prompt.', async () => {
   expect(mockExit.mock.calls.length).toBe(0)
 
   // Mock confirm.
-  const sendKeystrokes = async () => {
+  const sendKeystrokes = () => {
     io.send('y')
     io.send(keys.enter)
   }
 
-  setTimeout(() => sendKeystrokes().then(), 5)
+  setTimeout(() => sendKeystrokes(), 5)
 
   expect(await getDestinationPath('test/fixture/helper/non-empty')).toEqual(join(cwd, 'non-empty')) // Actual prompt.
   expect(existsSync(join(cwd, 'non-empty'))).toBeTruthy()
@@ -119,12 +119,12 @@ test('Existing git repository is kept when overriding a folder.', async () => {
   expect(mockExit.mock.calls.length).toBe(0)
 
   // Mock confirm.
-  const sendKeystrokes = async () => {
+  const sendKeystrokes = () => {
     io.send('n')
     io.send(keys.enter)
   }
 
-  setTimeout(() => sendKeystrokes().then(), 5)
+  setTimeout(() => sendKeystrokes(), 5)
 
   expect(await getDestinationPath('test/fixture/helper/non-empty-git')).toEqual(join(cwd, 'non-empty-git')) // Actual prompt.
 

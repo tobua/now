@@ -1,6 +1,6 @@
 import { expect, spyOn, test } from 'bun:test'
 import { cachePath } from '../config'
-import { loadPackage } from '../utility/load-package'
+import { loadPackage } from '../load-package'
 
 test('Returns correct url for various packages.', async () => {
   let url = await loadPackage('padua')

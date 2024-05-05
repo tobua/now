@@ -2,8 +2,8 @@ import { copyFileSync, existsSync, mkdirSync, readdirSync, writeFileSync } from 
 import { join } from 'node:path'
 import ejs from 'ejs'
 import { isBinaryFileSync } from 'isbinaryfile'
-import type { Config } from '../types'
 import { log } from './log'
+import type { Config } from './types'
 
 const writeDirectoryFiles = (
   directory: string,

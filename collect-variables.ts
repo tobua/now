@@ -1,5 +1,5 @@
-import type { Config } from '../types'
 import { promptVariables } from './prompt'
+import type { Config } from './types'
 
 const removePropertyFromPrompts = (config: Config, property: string) => {
   if (config.prompts && Array.isArray(config.prompts)) {

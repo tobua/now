@@ -1,6 +1,6 @@
 import prompts from 'prompts'
-import type { Config } from '../types'
 import { log } from './log'
+import type { Config } from './types'
 
 export const promptDirectories = async (directories: string[]) => {
   const response = await prompts({

@@ -1,5 +1,5 @@
-import { existsSync, readdirSync } from 'node:fs'
-import { join } from 'node:path'
+import { existsSync, lstatSync, readdirSync } from 'node:fs'
+import { basename, join } from 'node:path'
 import { log } from './log'
 import { promptDirectories } from './prompt'
 
@@ -38,8 +38,28 @@ const selectDirectory = (singleTemplate: boolean, directories: string[], templat
   return promptDirectories(directories)
 }
 
+function findFirstFolder(folder: string) {
+  if (!folder) {
+    return ''
+  }
+  const files = readdirSync(folder)
+  let result = ''
+
+  for (const file of files) {
+    const filePath = join(folder, file)
+
+    if (lstatSync(filePath).isDirectory()) {
+      result = basename(filePath)
+      break
+    }
+  }
+
+  return result
+}
+
 export const getTemplateDirectory = async (template = '', cachePath = '', pathOverride?: string) => {
-  const templatesPath = pathOverride || join(cachePath, 'template')
+  const containingFolder = findFirstFolder(cachePath)
+  const templatesPath = pathOverride || join(cachePath, containingFolder, 'template')
 
   if (!existsSync(templatesPath)) {
     log('Repository has no /template folder', 'error')

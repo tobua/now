@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import type { Config } from '../types'
 import { log } from './log'
+import type { Config } from './types'
 
 export const getConfig = (templateDirectory: string) => {
   const configFilePath = join(templateDirectory, 'template.json')

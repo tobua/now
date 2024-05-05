@@ -3,9 +3,9 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { type MockSTDIN, stdin } from 'mock-stdin'
 import { cachePath } from '../config'
-import { downloadTemplate } from '../utility/download-template'
-import { cleanup } from '../utility/helper'
-import { getTemplateDirectory } from '../utility/template-directory'
+import { downloadTemplate } from '../download-template'
+import { cleanup } from '../helper'
+import { getTemplateDirectory } from '../template-directory'
 
 let io: MockSTDIN
 beforeAll(() => {
@@ -26,9 +26,9 @@ test('Successfully downloads the template and stores it temporarly.', async () =
   await downloadTemplate('tobua/padua', cache)
   expect(existsSync(cache)).toBeTruthy()
   // Template directory exists.
-  expect(existsSync(join(cache, 'template'))).toBeTruthy()
+  expect(existsSync(join(cache, 'padua-main', 'template'))).toBeTruthy()
   // Whole repo is checked out.
-  expect(existsSync(join(cache, 'package.json'))).toBeTruthy()
+  expect(existsSync(join(cache, 'padua-main', 'package.json'))).toBeTruthy()
 
   cleanup(cache)
 
@@ -48,13 +48,13 @@ test('Locates template in main directory.', async () => {
 
 test('Recoginizes several templates are available.', async () => {
   // Mocks selection of second template available.
-  const sendKeystrokes = async () => {
+  const sendKeystrokes = () => {
     io.send(keys.down)
     io.send(keys.down)
     io.send(keys.enter)
   }
 
-  setTimeout(() => sendKeystrokes().then(), 5)
+  setTimeout(() => sendKeystrokes(), 5)
 
   const templatePath = await getTemplateDirectory(undefined, undefined, join(process.cwd(), 'test/fixture/nested'))
 
@@ -91,10 +91,10 @@ test('Successfully downloads template from main branch repository.', async () =>
   await downloadTemplate('tobua/squak', cache)
   expect(existsSync(cache)).toBeTruthy()
   // Template directory exists.
-  expect(existsSync(join(cache, 'template'))).toBeTruthy()
-  expect(existsSync(join(cache, 'template/full/app.ts'))).toBeTruthy()
+  expect(existsSync(join(cache, 'squak-main', 'template'))).toBeTruthy()
+  expect(existsSync(join(cache, 'squak-main', 'template/full/app.ts'))).toBeTruthy()
   // Whole repo is checked out.
-  expect(existsSync(join(cache, 'package.json'))).toBeTruthy()
+  expect(existsSync(join(cache, 'squak-main', 'package.json'))).toBeTruthy()
 })
 
 test('Finds template even when README present in template folder.', async () => {
@@ -102,7 +102,7 @@ test('Finds template even when README present in template folder.', async () => 
   // Uses template downloaded in previous test.
   const templateDirectory = await getTemplateDirectory('full', cache)
 
-  expect(templateDirectory).toEqual(join(cache, 'template/full'))
+  expect(templateDirectory).toEqual(join(cache, 'squak-main', 'template/full'))
 
   cleanup(cache)
 })
@@ -125,11 +125,11 @@ test('Downloads multiple templates in parallel.', async () => {
   expect(existsSync(cachePadua)).toBeTruthy()
   expect(existsSync(cachePapua)).toBeTruthy()
   // Template directory exists.
-  expect(existsSync(join(cachePadua, 'template'))).toBeTruthy()
-  expect(existsSync(join(cachePapua, 'template'))).toBeTruthy()
+  expect(existsSync(join(cachePadua, 'padua-main', 'template'))).toBeTruthy()
+  expect(existsSync(join(cachePapua, 'papua-main', 'template'))).toBeTruthy()
   // Whole repo is checked out.
-  expect(existsSync(join(cachePadua, 'package.json'))).toBeTruthy()
-  expect(existsSync(join(cachePapua, 'package.json'))).toBeTruthy()
+  expect(existsSync(join(cachePadua, 'padua-main', 'package.json'))).toBeTruthy()
+  expect(existsSync(join(cachePapua, 'papua-main', 'package.json'))).toBeTruthy()
 
   cleanup(cachePadua)
   cleanup(cachePapua)

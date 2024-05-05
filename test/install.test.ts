@@ -1,10 +1,10 @@
 import { expect, test } from 'bun:test'
 import { existsSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { getConfig } from '../utility/get-config'
-import { installDependencies } from '../utility/install-dependencies'
-import { getTemplateDirectory } from '../utility/template-directory'
-import { writeFiles } from '../utility/write-files'
+import { getConfig } from '../get-config'
+import { installDependencies } from '../install-dependencies'
+import { getTemplateDirectory } from '../template-directory'
+import { writeFiles } from '../write-files'
 
 test('Dependencies are installed if there are any.', async () => {
   const destination = join(process.cwd(), '.jest-temp-dependencies')

@@ -1,14 +1,14 @@
 #!/usr/bin/env bun
+import { collectVariables } from './collect-variables'
 import { cachePath } from './config'
-import { collectVariables } from './utility/collect-variables'
-import { downloadTemplate } from './utility/download-template'
-import { getConfig } from './utility/get-config'
-import { cleanup, getDestinationPath, validatePackageName } from './utility/helper'
-import { installDependencies } from './utility/install-dependencies'
-import { loadPackage } from './utility/load-package'
-import { log } from './utility/log'
-import { getTemplateDirectory } from './utility/template-directory'
-import { writeFiles } from './utility/write-files'
+import { downloadTemplate } from './download-template'
+import { getConfig } from './get-config'
+import { cleanup, getDestinationPath, validatePackageName } from './helper'
+import { installDependencies } from './install-dependencies'
+import { loadPackage } from './load-package'
+import { log } from './log'
+import { getTemplateDirectory } from './template-directory'
+import { writeFiles } from './write-files'
 
 // Remove additional parameter when used with flag like --yes in older node versions.
 if (process.argv[2] === 'now') {

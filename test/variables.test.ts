@@ -4,10 +4,10 @@ import { join } from 'node:path'
 import isPng from 'is-png'
 import { type MockSTDIN, stdin } from 'mock-stdin'
 import { readChunkSync } from 'read-chunk'
-import { collectVariables } from '../utility/collect-variables'
-import { getConfig } from '../utility/get-config'
-import { getTemplateDirectory } from '../utility/template-directory'
-import { writeFiles } from '../utility/write-files'
+import { collectVariables } from '../collect-variables'
+import { getConfig } from '../get-config'
+import { getTemplateDirectory } from '../template-directory'
+import { writeFiles } from '../write-files'
 
 let io: MockSTDIN
 beforeAll(() => {
@@ -58,18 +58,18 @@ test('Static variables from template.json are written.', async () => {
 
 test('Dynamic variables from template.json are prompted and written.', async () => {
   // Mocks entering of dynamic variables.
-  const sendKeystrokesFirstVariable = async () => {
+  const sendKeystrokesFirstVariable = () => {
     io.send('first', 'ascii')
     io.send(keys.enter)
   }
 
-  const sendKeystrokesSecondVariable = async () => {
+  const sendKeystrokesSecondVariable = () => {
     io.send('second', 'ascii')
     io.send(keys.enter)
   }
 
-  setTimeout(() => sendKeystrokesFirstVariable().then(), 5)
-  setTimeout(() => sendKeystrokesSecondVariable().then(), 10)
+  setTimeout(() => sendKeystrokesFirstVariable(), 5)
+  setTimeout(() => sendKeystrokesSecondVariable(), 10)
 
   const templateDirectory = await getTemplateDirectory('dynamic', undefined, join(process.cwd(), 'test/fixture/variable'))
   const config = getConfig(templateDirectory)
@@ -86,18 +86,18 @@ test('Dynamic variables from template.json are prompted and written.', async () 
 
 test('Nested files are written as well and static, dynamic variables can be combined.', async () => {
   // Mocks entering of dynamic variables.
-  const sendKeystrokesFirstVariable = async () => {
+  const sendKeystrokesFirstVariable = () => {
     io.send('first', 'ascii')
     io.send(keys.enter)
   }
 
-  const sendKeystrokesSecondVariable = async () => {
+  const sendKeystrokesSecondVariable = () => {
     io.send('second', 'ascii')
     io.send(keys.enter)
   }
 
-  setTimeout(() => sendKeystrokesFirstVariable().then(), 5)
-  setTimeout(() => sendKeystrokesSecondVariable().then(), 10)
+  setTimeout(() => sendKeystrokesFirstVariable(), 5)
+  setTimeout(() => sendKeystrokesSecondVariable(), 10)
 
   const templateDirectory = await getTemplateDirectory('nested', undefined, join(process.cwd(), 'test/fixture/variable'))
   const config = getConfig(templateDirectory)

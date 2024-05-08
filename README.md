@@ -4,15 +4,15 @@
 
 # now
 
-Create projects from templates.
+Create projects from templates. This CLI will bootstrap templates from the `/template` directory in a GitHub repository linked to form an npm-package.
 
 ## Usage
 
 Install template for compatible packages like this:
 
 ```sh
-bun create now papua
-bunx create-now papua
+bun create now zero-configuration
+bunx create-now zero-configuration . web
 ```
 
 ## Options
@@ -25,13 +25,13 @@ The second argument can be used to describe the location where to place the proj
 
 ### Example
 
-Use the papua build tool with the `website` template and place result in `/my-site` folder.
+Use the `zero-configuration` configuration tool with the `web` template and place result in `/my-site` folder.
 
 ```sh
-bun create now papua my-site website
+bun create now zero-configuration my-site web
 ```
 
-Create a React Native app managed with numic inside the `/my-app` folder avoiding the prompt for a bundle name by presetting the variable.
+Create a React Native app managed with `numic` inside the `/my-app` folder avoiding the prompt for a bundle name by presetting the variable.
 
 ```sh
 bun create now numic my-app default name=tesla

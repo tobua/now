@@ -4,7 +4,13 @@ import validate from 'validate-npm-package-name'
 import { log } from './log'
 import { promptClear } from './prompt'
 
-const isDirectoryEmpty = (directory: string) => readdirSync(directory).length === 0
+function deleteFolderContents(directory: string) {
+  for (const file of readdirSync(directory)) {
+    rmSync(join(directory, file), { recursive: true })
+  }
+}
+
+const isDirectoryEmpty = (directory: string) => readdirSync(directory).filter((file: string) => file !== '.DS_Store').length === 0
 
 export const getDestinationPath = async (input = process.cwd(), skipClear = false) => {
   let destinationPath = process.cwd()
@@ -23,10 +29,8 @@ export const getDestinationPath = async (input = process.cwd(), skipClear = fals
     const clear = await promptClear(destinationPath)
 
     if (clear) {
-      // Clear directory to ensure proper npm install.
-      rmSync(destinationPath, { recursive: true })
-      // Directory itself is needed.
-      mkdirSync(destinationPath, { recursive: true })
+      // Clear directory contents to ensure proper template installation.
+      deleteFolderContents(destinationPath)
     } else {
       log('Keeping existing contents, might be overriden when copying the template')
     }

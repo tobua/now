@@ -22,10 +22,10 @@
     "prompts": "^2.4.2",
     "strip-dirs": "^3.0.0",
     "temp-dir": "^3.0.0",
-    "validate-npm-package-name": "^5.0.0"
+    "validate-npm-package-name": "^5.0.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.7.2",
+    "@biomejs/biome": "^1.7.3",
     "@types/bun": "^1.1.1",
     "@types/decompress": "^4.2.7",
     "@types/ejs": "^3.1.5",
@@ -36,7 +36,7 @@
     "mock-stdin": "^1.0.0",
     "read-chunk": "^4.0.3",
     "typescript": "^5.4.5",
-    "zero-configuration": "^0.7.1"
+    "zero-configuration": "^0.7.2"
   },
   "trustedDependencies": [
     "zero-configuration"

@@ -36,7 +36,7 @@
     "mock-stdin": "^1.0.0",
     "read-chunk": "^4.0.3",
     "typescript": "^5.4.5",
-    "zero-configuration": "^0.7.2"
+    "zero-configuration": "^0.8.0"
   },
   "trustedDependencies": [
     "zero-configuration"

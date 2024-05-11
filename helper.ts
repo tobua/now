@@ -4,13 +4,19 @@ import validate from 'validate-npm-package-name'
 import { log } from './log'
 import { promptClear } from './prompt'
 
+const hiddenFiles = ['.DS_Store']
+const protectedFiles = ['.git'] // User checking out a template into a repository.
+const invisibleFiles = [...hiddenFiles, ...protectedFiles]
+
 function deleteFolderContents(directory: string) {
   for (const file of readdirSync(directory)) {
-    rmSync(join(directory, file), { recursive: true })
+    if (!protectedFiles.includes(file)) {
+      rmSync(join(directory, file), { recursive: true })
+    }
   }
 }
 
-const isDirectoryEmpty = (directory: string) => readdirSync(directory).filter((file: string) => file !== '.DS_Store').length === 0
+const isDirectoryEmpty = (directory: string) => readdirSync(directory).filter((file: string) => !invisibleFiles.includes(file)).length === 0
 
 export const getDestinationPath = async (input = process.cwd(), skipClear = false) => {
   let destinationPath = process.cwd()
